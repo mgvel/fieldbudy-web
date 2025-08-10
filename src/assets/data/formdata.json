@@ -1,0 +1,1056 @@
+[
+      {
+        "color": "dark",
+        "id": "page-1",
+        "title": "Scope of Work",
+        "order": 1,
+        "section": [
+          {
+            "id": "section-sow-worksheet",
+            "title": "SOW Worksheet",
+            "order": 1,
+            "fields": [
+              {
+                "id": "assignment-scope",
+                "title": "Assignment Sheet Scope",
+                "isOptional": false,
+                "fieldType": "text",
+                "order": 1
+              },
+              {
+                "id": "received-scope",
+                "title": "Scope from Received Documents",
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "If any additional documents were received, Experts MUST review them closely and add scope items in this field. Please list each reportedly damaged building material and/or area that was (were) not listed in the 'Assignment Sheet Scope' field",
+                "order": 2
+              },
+              {
+                "id": "interview-scope",
+                "title": "Scope from Interview",
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "If any scope is added from the interviews. Experts MUST add those scope items in this field. Please list each reportedly damaged building material and/or area that was (were) not listed in the 'Assignment Sheet Scope' or 'Scope from Received Documents' fields.",
+                "order": 3
+              }
+            ]
+          },
+          {
+            "id": "section-sow-statement",
+            "title": "SOW Statement",
+            "order": 2,
+            "fields": [
+              {
+                "id": "select-standard",
+                "title": "Select Standard Scope",
+                "isOptional": false,
+                "fieldType": "dropdown",
+                "order": 1,
+                "options": [
+                  "To determine the cause, origin, duration, extent, and reparability of:",
+                  "To determine the extent and reparability of the reported damage to:",
+                  "To determine whether the reported damage occurred on or around the reported date of loss due to:",
+                  "To determine whether the reported damage occurred due to the reported wind or flood event:",
+                  "To determine:"
+                ]
+              },
+              {
+                "id": "standard-scope",
+                "title": "Standard Scope",
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "Experts MUST craft a complete SOW Statement (to use 'as is' in the report) before the IDP is submitted.",
+                "order": 2,
+                "instructions": "Engineering Managers MUST review and comment on the SOW Statement.<br/><br/>Technical Writers MUST verify with Experts if the SOW statement does not cover all the requested items by the client."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "dark",
+        "id": "page-2",
+        "title": "Property Background",
+        "order": 2,
+        "section": [
+          {
+            "id": "section-structure",
+            "title": "Structure",
+            "order": 1,
+            "isDeletable": true,
+            "isDuplicable": true,
+            "fields": [
+              {
+                "id": "select-building",
+                "title": "Select Building Type",
+                "order": 1,
+                "fieldType": "dropdown",
+                "options": [
+                  "Single Family",
+                  "Duplex",
+                  "Apartment",
+                  "Condominium",
+                  "Townhouse",
+                  "Manufactured",
+                  "Mobile",
+                  "Detached Garage",
+                  "Shed",
+                  "Guest House",
+                  "Retail Store",
+                  "Gas Station",
+                  "Restaurant",
+                  "Motel",
+                  "Hotel",
+                  "Clubhouse",
+                  "Commercial office",
+                  "Auditorium",
+                  "Barn",
+                  "Basketball",
+                  "Cabana",
+                  "Cathedral",
+                  "Church",
+                  "Community Center",
+                  "Courthouse",
+                  "Distribution Center",
+                  "Fitness Center",
+                  "Library",
+                  "Mosque",
+                  "Pavilion",
+                  "Poolhouse",
+                  "Public swimming pool",
+                  "School",
+                  "Storage",
+                  "Synagogue",
+                  "Temple",
+                  "Warehouse"
+                ]
+              },
+              {
+                "id": "story-number",
+                "title": "Enter Number of Stories",
+                "order": 2,
+                "fieldType": "number",
+                "hint": "Enter Number of Stories"
+              },
+              {
+                "id": "active-story",
+                "title": "Enter Story #",
+                "order": 3,
+                "fieldType": "number",
+                "hint": "Enter Story # where the subject unit is located"
+              },
+              {
+                "id": "select-construction",
+                "title": "Select Structure Construction Type",
+                "order": 4,
+                "fieldType": "dropdown",
+                "options": [
+                  "Concrete Masonry Unit (CMU) Walls",
+                  "Wood Framed (WF) Walls",
+                  "1st-Story CMU with upper-story WF Walls",
+                  "CMU Pier and wood beam",
+                  "Wood pier and beam",
+                  "Wood column and beam",
+                  "Steel column and beam",
+                  "Concrete column and beam",
+                  "Pile and wood beam",
+                  "Brick Structural Wall",
+                  "Stone-Masonary Structural Walls",
+                  "Sandwich-panel Walls",
+                  "Insulated Concrete Forms (ICF) Walls",
+                  "Metal-Framed (MF) Walls",
+                  "1st-story CMU with Upper-story MF Walls"
+                ]
+              },
+              {
+                "id": "select-foundation",
+                "title": "Select Foundation Type",
+                "order": 5,
+                "fieldType": "dropdown",
+                "options": [
+                  "Concrete slab-on-grade",
+                  "Post-tensioned Concrete slab-on-grade",
+                  "Structural Slab",
+                  "CMU Stem Wall",
+                  "Concrete stem wall",
+                  "Pier-and-beam",
+                  "Wood piles",
+                  "Concrete Piles",
+                  "Brick Stem Wall",
+                  "Stone Stem Wall",
+                  "Sheet Piling",
+                  "Basement Foundation Walls"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "section-property",
+            "title": "Property Appraiser's Record",
+            "order": 2,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "property-file",
+                "title": "Attach File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Drag and drop files OR",
+                "folder": "4-Researched Data/2-Property Appraiser"
+              },
+              {
+                "id": "property-note",
+                "title": "Notes for Property Appraiser's Record",
+                "order": 2,
+                "isOptional": true,
+                "fieldType": "text",
+                "hint": "Experts MUST add notes after reviewing the Property Aprraiser's Record."
+              }
+            ]
+          },
+          {
+            "id": "section-topo",
+            "title": "Topographic Map",
+            "order": 3,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "topography-file",
+                "title": "Attach File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "If relevant to the scope, obtain elevation information from Data File and Figures (if available), or obtain elevation information from https://viewer.nationalmap.gov/.",
+                "folder": "4-Researched Data/1-Orientation and Map"
+              },
+              {
+                "id": "note-file",
+                "title": "Notes for Topographic Map",
+                "order": 2,
+                "isOptional": true,
+                "fieldType": "text",
+                "hint": "The United States Geological Survey (USGS) topographic maps indicated that the property elevation was X.XX feet above the North American Vertical Datum of 1988 (NAVD88). Figure X displays a portion of the topographic map containing the property.",
+                "value": "The United States Geological Survey (USGS) topographic maps indicated that the property elevation was X.XX feet above the North American Vertical Datum of 1988 (NAVD88). Figure X displays a portion of the topographic map containing the property."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "dark",
+        "id": "page-3",
+        "title": "Interviewee(s)",
+        "order": 3,
+        "section": [
+          {
+            "id": "section-interviewee",
+            "title": "Interviewee",
+            "order": 1,
+            "isDeletable": true,
+            "isDuplicable": true,
+            "fields": [
+              {
+                "id": "interviewee-contact",
+                "title": "Contact Method",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "dropdown",
+                "options": [
+                  "Present at Site",
+                  "Via Phone",
+                  "Via Video",
+                  "No one present"
+                ]
+              },
+              {
+                "id": "interviewee-salutation",
+                "title": "Select Mr./Mrs.",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "dropdown",
+                "options": [
+                  "Mr.",
+                  "Mrs"
+                ]
+              },
+              {
+                "id": "interviewee-firstname",
+                "title": "First Name",
+                "order": 3,
+                "isOptional": false,
+                "fieldType": "input",
+                "hint": "Enter first name"
+              },
+              {
+                "id": "interviewee-lastname",
+                "title": "Last Name",
+                "order": 4,
+                "isOptional": false,
+                "fieldType": "input",
+                "hint": "Enter last name"
+              },
+              {
+                "id": "interviewee-title",
+                "title": "Select Title",
+                "order": 5,
+                "isOptional": false,
+                "fieldType": "dropdown",
+                "options": [
+                  "Owner",
+                  "Co-owner",
+                  "Spouse",
+                  "Daughter",
+                  "Son",
+                  "Father",
+                  "Mother",
+                  "Cousin",
+                  "Friend",
+                  "Neighbor",
+                  "Grandfather",
+                  "Grandson",
+                  "Granddaughter",
+                  "Tenant",
+                  "Roofing Contractor",
+                  "General Contractor",
+                  "Mitigation Contractor",
+                  "Owner's Leak Detection Company",
+                  "Plumber",
+                  "Electrician",
+                  "Public Adjuster",
+                  "PA Estimator",
+                  "PA Intern",
+                  "Loss Consultant",
+                  "Owner's Attorney",
+                  "Attorney's Representative",
+                  "Paralegal",
+                  "Field Adjustor",
+                  "Field Technician",
+                  "Carrier's Contractor",
+                  "Building Consultant",
+                  "Carrier's Attorney",
+                  "Carrier's Leak Detection Company",
+                  "SIU Investigator"
+                ]
+              },
+              {
+                "id": "interviewee-company",
+                "title": "Company Name",
+                "order": 6,
+                "isOptional": false,
+                "fieldType": "input",
+                "hint": "Enter company name"
+              },
+              {
+                "id": "interviewee-significance",
+                "title": "Interviewee Significance",
+                "order": 7,
+                "isOptional": false,
+                "fieldType": "dropdown",
+                "options": [
+                  "Interviewee Provided Access",
+                  "Interviewee Provide Info",
+                  "Interviewee Provided Access & Info"
+                ]
+              },
+              {
+                "id": "interviewee-business-front",
+                "title": "Business Card Front",
+                "order": 8,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Business Card Front",
+                "folder": "5-ID Package"
+              },
+              {
+                "id": "interviewee-business-back",
+                "title": "Business Card Back",
+                "order": 9,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Business Card Back",
+                "folder":"5-ID Package"
+              },
+              {
+                "id": "interviewee-docs",
+                "title": "Upload Documents",
+                "order": 10,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Upload documents provided by the interviewee",
+                "folder":"5-ID Package"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "dark",
+        "id": "page-4",
+        "title": "Interview QnA",
+        "order": 4,
+        "section": [
+          {
+            "id": "section-question",
+            "title": "Questions",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "property-purchase",
+                "title": "When was the property purchased?",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "input",
+                "hint": "When was the property purchased?"
+              },
+              {
+                "id": "dol",
+                "title": "DOL per the interviewee",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "input",
+                "hint": "DOL per the interviewee"
+              },
+              {
+                "id": "record-interview",
+                "title": "Interview Recording",
+                "order": 3,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Record Interview",
+                "folder":"5-ID Package"
+              }
+            ]
+          },
+          {
+            "id": "interview-structure",
+            "title": "Structure",
+            "order": 2,
+            
+            "fields": [
+              {
+                "id": "interview-structure-built",
+                "title": "When was the structure built?",
+                "order": 1,
+                "fieldType": "input",
+                "hint": "When was the structure built?"
+              },
+              {
+                "id": "interview-roof-replaced",
+                "title": "When was the roof last replaced?",
+                "order": 2,
+                "fieldType": "input",
+                "hint": "When was the roof last replaced?"
+              },
+              {
+                "id": "interview-interior-damage",
+                "title": "Interior damage general information",
+                "order": 3,
+                "fieldType": "dropdown",
+                "options": [
+                  "To be provided by Rishi"
+                ]
+              },
+              {
+                "id": "exterior-notes",
+                "title": "Exterior damage general information",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "1. Which items were damaged?<br/><br/>2. When were they installed?<br/><br/>3. When was the damage first noticed?<br/><br/>4. Which specific items were repaired and when?<br/><br/>5. Which specific items were replaced and when?<br/><br/>6. Which areas were damaged?<br/><br/>7. When were they installed?<br/><br/>8. When was each area of damage first noticed?",
+                "value": "1. Which items were damaged?<br/><br/>2. When were they installed?<br/><br/>3. When was the damage first noticed?<br/><br/>4. Which specific items were repaired and when?<br/><br/>5. Which specific items were replaced and when?<br/><br/>6. Which areas were damaged?<br/><br/>7. When were they installed?<br/><br/>8. When was each area of damage first noticed?"
+              }
+            ]
+          },
+          {
+            "id": "section-room",
+            "title": "Room/Area",
+            "order": 4,
+            "isDeletable": true,
+            "isDuplicable": true,
+            "fields": [
+              {
+                "id": "interview-room",
+                "title": "Select Room/Area 1",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "dropdown",
+                "options": [
+                  "Common Spaces:disabled",
+                  "Bonus Room",
+                  "Den",
+                  "Dining area",
+                  "Dining room",
+                  "Eat-in Kitchen (EIK)",
+                  "Entry foyer (Foyer)",
+                  "Family Room",
+                  "Garage",
+                  "Hallway",
+                  "Kitchen",
+                  "Living Room",
+                  "Office",
+                  "Staircase",
+                  "Stairlobby",
+                  "Sunroom",
+                  "Bedrooms:disabled",
+                  "Front-Left bedroom",
+                  "Front-Right Bedroom",
+                  "Guest Bedroom",
+                  "Master Bedroom",
+                  "Middle-Left Bedroom",
+                  "Middle-Right Bedroom",
+                  "Rear-Left bedroom",
+                  "Rear-Middle bedroom",
+                  "Rear-Right bedroom",
+                  "Spare Bedroom",
+                  "Bathrooms:disabled",
+                  "Guest Bathroom",
+                  "Hallyway Bathroom",
+                  "Master Bathroom",
+                  "Pool Bathroom",
+                  "Spare Bathroom",
+                  "Utility/Closets:disabled",
+                  "Air-Handler Unit closet (AHU closet)",
+                  "Elevator Lobby",
+                  "Hallway Closet (Closet)",
+                  "Laundry Room",
+                  "Master-Bedroom Closet (Closet)",
+                  "Mechanical Room",
+                  "Pantry (walk-in)",
+                  "Pantry Closet (Pantry)",
+                  "Exterior:disabled",
+                  "Balcony",
+                  "Entrance Porch (Porch)",
+                  "Front Porch (Porch)",
+                  "Patio",
+                  "Pool",
+                  "Pool Deck",
+                  "Rear Porch (Porch)",
+                  "Shed"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "dark",
+        "id": "page-5",
+        "title": "Field Sketches",
+        "order": 5,
+        "section": [
+          {
+            "id": "section-interior-sketch",
+            "title": "Sketches (except Roof Sketch)",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "interior-sketch-images",
+                "title": "Upload Images",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "A sketch showing the locations of the damages",
+                "folder": "5-ID Package/3-Field Sketches (by FE)"
+              },
+              {
+                "id": "interior-sketch-notes",
+                "title": "Add Notes",
+                "order": 2,
+                "isOptional": true,
+                "fieldType": "text",
+                "hint": "Experts to add notes, as suitable"
+              }
+            ]
+          },
+          {
+            "id": "section-roof-sketch",
+            "title": "Roof Sketch",
+            "order": 2,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "roof-sketch-images",
+                "title": "Upload Images",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "A roof sketch showing the locations of the damages",
+                "folder": "5-ID Package/3-Field Sketches (by FE)"
+              },
+              {
+                "id": "roof-sketch-notes",
+                "title": "Add Notes",
+                "order": 2,
+                "isOptional": true,
+                "fieldType": "text",
+                "hint": "Experts to add notes, as suitable"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "dark",
+        "id": "page-6",
+        "title": "Document Reviews",
+        "order": 6,
+        "section": [
+          {
+            "id": "section-document",
+            "title": "Document",
+            "order": 1,
+            "isDeletable": true,
+            "isDuplicable": true,
+            "fields": [
+              {
+                "id": "document-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Click here to upload document",
+                "folder": "1-Received Information"
+              },
+              {
+                "id": "document-desc",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "Construction Estimate and Photo Sheet - prepared by Company XX and dated Month Date, Year<br/><br/>This document contained a one-page Construction Estimate and 10-page Photo Sheet prepared by a field adjuster from Company XX, Mr./Ms. FirstName LastName, The Construction Estimate was dated Month Date, Year. The Photo Sheet contained 20 color photographs showing the conditions of the exterior, interior, and roof of the subject structure, which were generally similar to those observed during our site investigation.",
+                "value": "Construction Estimate and Photo Sheet - prepared by Company XX and dated Month Date, Year<br/><br/>This document contained a one-page Construction Estimate and 10-page Photo Sheet prepared by a field adjuster from Company XX, Mr./Ms. FirstName LastName, The Construction Estimate was dated Month Date, Year. The Photo Sheet contained 20 color photographs showing the conditions of the exterior, interior, and roof of the subject structure, which were generally similar to those observed during our site investigation."
+              },
+              {
+                "id": "document-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 3,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "State in a bullet point format the particularly noteworthy items from the document."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "danger",
+        "id": "page-7",
+        "title": "WRHT Data",
+        "order": 7,
+        "section": [
+          {
+            "id": "section-wind",
+            "title": "Wind and Rainfall Data",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "wind-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Drag and drop files OR",
+                "folder": "4-Researched Data/3-Wind Data"
+              },
+              {
+                "id": "wind-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "We obtained weather data from Month Date, Year through Month Date, Year (date of our site investigation) from the National Oceanic and Atmospheric Administration’s (NOAA) National Weather Service (NWS) website of https://http://w2.weather.gov/climate/. The closest weather station to the subject property was at the Fort Lauderdale Executive Airport in Fort Lauderdale, Florida, approximately 7 miles southeast of the subject property. The recorded maximum sustained wind speed and wind gusts at this weather station during this period were 32 miles per hour (mph) and 45 mph, respectively, on Month Date, 2022. The recorded maximum sustained wind speed and wind gusts at this weather station on the reported date of loss were 32 mph and 45 mph, respectively. The estimated rainfall on the reported date of loss was approximately 4.13 inches.",
+                "value": "We obtained weather data from Month Date, Year through Month Date, Year (date of our site investigation) from the National Oceanic and Atmospheric Administration’s (NOAA) National Weather Service (NWS) website of https://http://w2.weather.gov/climate/. The closest weather station to the subject property was at the Fort Lauderdale Executive Airport in Fort Lauderdale, Florida, approximately 7 miles southeast of the subject property. The recorded maximum sustained wind speed and wind gusts at this weather station during this period were 32 miles per hour (mph) and 45 mph, respectively, on Month Date, 2022. The recorded maximum sustained wind speed and wind gusts at this weather station on the reported date of loss were 32 mph and 45 mph, respectively. The estimated rainfall on the reported date of loss was approximately 4.13 inches."
+              }
+            ]
+          },
+          {
+            "id": "section-hail",
+            "title": "Hail Data",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "hail-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Drag and drop files OR",
+                "folder": "4-Researched Data/4-Hail Data"
+              },
+              {
+                "id": "hail-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "From the NWS to display the storm data. The data on the website is updated every few minutes directly from the NOAA data source and trained storm spotters. The archived weather data during this period did not show any report of hail falling within 25 miles of the subject property.",
+                "value": "From the NWS to display the storm data. The data on the website is updated every few minutes directly from the NOAA data source and trained storm spotters. The archived weather data during this period did not show any report of hail falling within 25 miles of the subject property."
+              }
+            ]
+          },
+          {
+            "id": "section-tornado",
+            "title": "Tornado Data",
+            "order": 3,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "tornado-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "The Tornado Data file.",
+                "folder": "4-Researched Data/3-Wind Data"
+              },
+              {
+                "id": "tornado-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "Historical weather data for the Polk County area was reviewed for Month Date, Year, using NOAA’s Storm Prediction Center (SPC). Figure 1 shows information regarding the tornado activity in the Polk County area on Month Date, Year obtained from SPC. The closest report of damage due to a tornado was damage to XXXX in City, State, approximately X miles northeast of the subject property. No information regarding the intensity of the reported tornado in City, State was available. We also reviewed several other weather data websites owned by NOAA to obtain information regarding the reported tornado. No information relevant to the reported tornado event could be obtained from these websites. Several media websites reported that on Month Date, Year, at least three tornadoes passed through the City, State area causing structural damage. The media reported that an EF2 tornado [on the Enhanced Fujita (EF) scale] touched down in City, State, which was approximately 8 miles northeast of the subject property. The EF Scale is used to assign a \"rating\" for tornadoes based on estimated wind speeds and related damage. When tornado-related damage is surveyed, it is compared to a list of Damage Indicators (DIs) and Degrees of Damage (DoD) which help estimate better the range of wind speeds the tornado likely produced. From that, a rating (EF0 to EF5) is assigned. The wind speeds associated with the EF scale are provided in the below table.",
+                "value": "Historical weather data for the Polk County area was reviewed for Month Date, Year, using NOAA’s Storm Prediction Center (SPC). Figure 1 shows information regarding the tornado activity in the Polk County area on Month Date, Year obtained from SPC. The closest report of damage due to a tornado was damage to XXXX in City, State, approximately X miles northeast of the subject property. No information regarding the intensity of the reported tornado in City, State was available. We also reviewed several other weather data websites owned by NOAA to obtain information regarding the reported tornado. No information relevant to the reported tornado event could be obtained from these websites. Several media websites reported that on Month Date, Year, at least three tornadoes passed through the City, State area causing structural damage. The media reported that an EF2 tornado [on the Enhanced Fujita (EF) scale] touched down in City, State, which was approximately 8 miles northeast of the subject property. The EF Scale is used to assign a \"rating\" for tornadoes based on estimated wind speeds and related damage. When tornado-related damage is surveyed, it is compared to a list of Damage Indicators (DIs) and Degrees of Damage (DoD) which help estimate better the range of wind speeds the tornado likely produced. From that, a rating (EF0 to EF5) is assigned. The wind speeds associated with the EF scale are provided in the below table."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "danger",
+        "id": "page-8",
+        "title": "Lightning Strike",
+        "order": 8,
+        "section": [
+          {
+            "id": "section-lightning",
+            "title": "Property Appraiser's Record file",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "lightning-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Property Appraiser's Record File",
+                "folder": "4-Researched Data"
+              },
+              {
+                "id": "lightning-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "We obtained lightning strike and thunderstorm history reports for Month, Date, Year (the reported date of loss) from the Blitzortung online website of http://en.blitzortung.org. Figure 1 shows a lightning strike map excerpted from this website. This map showed that several lightning strikes were recorded close to the subject property at approximately 1.30 PM Universal Coordinated Time (i.e., 9.30 AM Eastern Standard Time) on Month, Date, Year. We also obtained a lightning report for the subject property from Benchmark. This report was prepared for a three-day period from Month Date, Year to Month Date, Year. The closest lightning strike detected on Month Date, Year (the reported date of loss) was 0.1 mile from the subject property.",
+                "value": "We obtained lightning strike and thunderstorm history reports for Month, Date, Year (the reported date of loss) from the Blitzortung online website of http://en.blitzortung.org. Figure 1 shows a lightning strike map excerpted from this website. This map showed that several lightning strikes were recorded close to the subject property at approximately 1.30 PM Universal Coordinated Time (i.e., 9.30 AM Eastern Standard Time) on Month, Date, Year. We also obtained a lightning report for the subject property from Benchmark. This report was prepared for a three-day period from Month Date, Year to Month Date, Year. The closest lightning strike detected on Month Date, Year (the reported date of loss) was 0.1 mile from the subject property."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "danger",
+        "id": "page-9",
+        "title": "Flood Data",
+        "order": 9,
+        "section": [
+          {
+            "id": "section-river",
+            "title": "USGS River Gage Data",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "river-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "River Gage Image",
+                "folder": "4-Researched Data"
+              },
+              {
+                "id": "river-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "According to the USGS - National Water Information System’s Water Resources online website, the gage height of the closest USGS stream gage, USGS OXXXXXXX on XXXX River at City, State, rose from approximately XX.X feet on Q Month, Date, Year to approximately XX.X feet on Month, Date, Year (Figure X)., This gage was approximately X miles northeast of the subject property.",
+                "value": "According to the USGS - National Water Information System’s Water Resources online website, the gage height of the closest USGS stream gage, USGS OXXXXXXX on XXXX River at City, State, rose from approximately XX.X feet on Q Month, Date, Year to approximately XX.X feet on Month, Date, Year (Figure X)., This gage was approximately X miles northeast of the subject property."
+              }
+            ]
+          },
+          {
+            "id": "section-water",
+            "title": "USGS High-water Mark Data",
+            "order": 2,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "water-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "High-Water Mark Image",
+                "folder": "4-Researched Data"
+              },
+              {
+                "id": "water-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "X.XX miles northwent of the subject property, documented a high-water mark of X.XX feet above the local ground (Figure X). This high- water mark elevation was XX.X feet NAVD88.",
+                "value": "X.XX miles northwent of the subject property, documented a high-water mark of X.XX feet above the local ground (Figure X). This high- water mark elevation was XX.X feet NAVD88."
+              }
+            ]
+          },
+          {
+            "id": "section-buoy",
+            "title": "NOAA Buoy Stream Gage Data",
+            "order": 3,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "buoy-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "NOAA Buoy Stream Gage Image",
+                "folder": "4-Researched Data"
+              },
+              {
+                "id": "buoy-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": ""
+              }
+            ]
+          },
+          {
+            "id": "section-distance",
+            "title": "Fetch Distance Data",
+            "order": 2,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "distance-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Distance Data",
+                "folder": "4-Researched Data"
+              },
+              {
+                "id": "distance-notes",
+                "title": "",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "Fetch is the distance from the dock to land in any direction over open water. The fetch distance to the northwest, southwest, and southeast was approximately XXX feet, XXX feet, and XXX feet, respectively, from the subject property (Figure X).",
+                "value": "Fetch is the distance from the dock to land in any direction over open water. The fetch distance to the northwest, southwest, and southeast was approximately XXX feet, XXX feet, and XXX feet, respectively, from the subject property (Figure X)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "danger",
+        "id": "page-10",
+        "title": "Historical Image Review",
+        "order": 10,
+        "section": [
+          {
+            "id": "section-aerial",
+            "title": "Aerial Images",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "aerial-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Aerial Image",
+                "folder": "4-Researched Data/6-Historical Imagery"
+              },
+              {
+                "id": "aerial-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": ""
+              }
+            ]
+          },
+          {
+            "id": "section-realtor",
+            "title": "Realtor Images",
+            "order": 2,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "realtor-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Realtor Image",
+                "folder": "4-Researched Data/6-Historical Imagery"
+              },
+              {
+                "id": "realtor-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "State in a bullet point format the particularly noteworthy items from the image."
+              }
+            ]
+          },
+          {
+            "id": "section-google",
+            "title": "Google/Bing Street View Images",
+            "order": 3,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "google-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Google/Bing Street View Image",
+                "folder": "4-Researched Data/6-Historical Imagery"
+              },
+              {
+                "id": "google-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "State in a bullet point format the particularly noteworthy items from the image."
+              }
+            ]
+          },
+          {
+            "id": "section-zillow",
+            "title": "Zillow.com Images",
+            "order": 4,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "zillow-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Zillow.com Image",
+                "folder": "4-Researched Data/6-Historical Imagery"
+              },
+              {
+                "id": "zillow-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "State in a bullet point format the particularly noteworthy items from the image."
+              }
+            ]
+          },
+          {
+            "id": "section-redfin",
+            "title": "Redfin.com Images",
+            "order": 5,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "redfin-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Redfin.com Image",
+                "folder": "4-Researched Data/6-Historical Imagery"
+              },
+              {
+                "id": "redfin-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "State in a bullet point format the particularly noteworthy items from the image."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "color": "danger",
+        "id": "page-11",
+        "title": "Soil Data",
+        "order": 11,
+        "section": [
+          {
+            "id": "section-soil",
+            "title": "Soil Data",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "soil-images",
+                "title": "Upload Data File",
+                "order": 1,
+                "isOptional": false,
+                "fieldType": "images",
+                "hint": "Drag and drop files OR",
+                "folder": "4-Researched Data/5-Soil Data"
+              },
+              {
+                "id": "soil-notes",
+                "title": "The following items in this image were particularly noteworthy:",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text",
+                "hint": "In order to understand the latent soil conditions surrounding the subject property and the effects of water on the foundation soils, we researched the soil profile as documented by the United States Department of Agriculture (USDA) and the National Resources Conservation Service (NRCS) soil survey website of http://websoilsurvey.nrcs.usda.gov/app/. We noted that the soil profile for the subject property location was listed as \"very limited\" for dwellings on XXXX (Figure X). The limitations of the soil profile were the result of the XXX type of soil. We noted that the limitations of the soil profile were the result of high shrink-swell potential. ",
+                "value": "In order to understand the latent soil conditions surrounding the subject property and the effects of water on the foundation soils, we researched the soil profile as documented by the United States Department of Agriculture (USDA) and the National Resources Conservation Service (NRCS) soil survey website of http://websoilsurvey.nrcs.usda.gov/app/. We noted that the soil profile for the subject property location was listed as \"very limited\" for dwellings on XXXX (Figure X). The limitations of the soil profile were the result of the XXX type of soil. We noted that the limitations of the soil profile were the result of high shrink-swell potential. "
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  

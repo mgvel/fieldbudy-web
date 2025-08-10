@@ -1,0 +1,110 @@
+.container {
+    max-width: 80vw;
+    margin: auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fafafa;
+    border-radius: 8px;
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #888;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+  }
+  
+  .tab-button.active {
+    background-color: #1976d2;
+    color: #fff;
+  }
+  
+  .tab-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tab-panel {
+    display: none;
+  }
+  
+  .tab-panel.visible {
+    display: block;
+  }
+  
+  .section {
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+  }
+  
+  .field {
+    margin-bottom: 20px;
+  }
+  
+  .field-title {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #444;
+  }
+  
+  .no-change-box {
+    background-color: #f3f4f6;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .loading,
+  .error-box,
+  .info-box {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 16px;
+  }
+  
+  .error-box {
+    color: #d32f2f;
+  }
+  
+  .info-box {
+    color: #555;
+  }
+  

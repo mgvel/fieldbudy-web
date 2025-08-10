@@ -1,0 +1,23 @@
+export type Project = {
+    id: string;
+    projectName: string;
+    projectNumber: string;
+    projectType: string;
+    claimNumber: string;
+    status: string;
+    clientProjectNumber: string;
+    dateOfLoss: string;
+    lossLocationStreetAddress: string;
+    accountName: string;
+    ownerName: string;
+    insurer: string;
+    insurerContactName: string;
+    scopeOfService: string;
+    description: string;
+    projectFolderWorkdrive: string;
+    form: { slug: string };
+    fe?: { fullName: string };
+    qr?: { fullName: string };
+    em?: { fullName: string };
+    tw?: { fullName: string };
+  };
