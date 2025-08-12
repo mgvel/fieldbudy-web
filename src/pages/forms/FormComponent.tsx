@@ -203,8 +203,53 @@ const FormComponent: React.FC = () => {
 
       setLastSaved(formattedDate);
       setHasUnsavedChanges(false);
-      toast.success("Changes saved successfully");
+      // toast.success("Changes saved successfully");
       // await fetchProject();
+    } catch (error) {
+      console.error("Error saving form:", error);
+      toast.error("Failed to save form data");
+    } finally {
+      setIsSaving(false);
+    }
+  }, [project?.form?.slug, responses, counts, versionName, fetchProject]);
+
+  const savingFormData = useCallback(async () => {
+    if (!project?.form?.slug) {
+      toast.error("Project form slug is missing");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const payload = {
+        responses,
+        ...counts
+      };
+
+      const response = await axiosInstance.post(
+        `${API_BASE_URL}/form/create/${project.form.slug}`,
+         payload,
+        {
+          params: {
+            versionName: ProjectStatus.IDPInProgressByFE,
+          },
+        }
+      );
+
+      const now = new Date();
+      const formattedDate = now.toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      });
+
+      setLastSaved(formattedDate);
+      toast.success("Changes saved successfully");
+      await fetchProject();
     } catch (error) {
       console.error("Error saving form:", error);
       toast.error("Failed to save form data");
@@ -300,6 +345,31 @@ const FormComponent: React.FC = () => {
     }
   }, [navigate, hasUnsavedChanges]);
 
+
+// Add this effect in your FormComponent
+useEffect(() => {
+  // 1. Check for chat request after form loads
+  if (!formData) return;
+
+  const chatData = localStorage.getItem("openChat");
+  if (!chatData) return;
+
+  try {
+    // 2. Parse and validate data
+    const { fieldId } = JSON.parse(chatData);
+    if (fieldId) {
+      // 3. Open chat modal
+      setChatFieldId(fieldId);
+      setChatOpen(true);
+    }
+  } catch (error) {
+    console.error("Error opening chat:", error);
+  } finally {
+    // 4. Clean up
+    localStorage.removeItem("openChat");
+  }
+}, [formData]); // Runs when formData loads
+
   // Cleanup effect
   useEffect(() => {
     return () => {
@@ -331,6 +401,8 @@ const FormComponent: React.FC = () => {
       </Box>
     );
   }
+
+  
 
   const isEditable = !readOnly && ['IDP In Progress - By FE', 'IDP Not Started'].includes(versionName || '');
 
@@ -371,7 +443,7 @@ const FormComponent: React.FC = () => {
           onUpdateCounts={handleUpdateCounts}
           project={project.id}
           versionName={versionName}
-          saveCurrentVersion={saveCurrentVersionForm}
+          saveCurrentVersion={savingFormData}
           hasUnsavedChanges={hasUnsavedChanges}
         />
       </Box>

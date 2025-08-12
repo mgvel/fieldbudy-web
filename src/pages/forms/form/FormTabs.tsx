@@ -510,6 +510,7 @@ const FormTabs: React.FC<AdvancedFormTabsProps> = ({
       </Box>
       <div className="flex justify-center">
         <div className="fixed bottom-1 py-2 rounded-xl bg-[#eee] flex justify-center items-center px-5 gap-3">
+        {shouldShowButton && (
           <Button
             variant="outlined"
             size="small"
@@ -529,6 +530,7 @@ const FormTabs: React.FC<AdvancedFormTabsProps> = ({
           >
             Next
           </Button>
+        )}
 
           {shouldShowButton && (
             <Button

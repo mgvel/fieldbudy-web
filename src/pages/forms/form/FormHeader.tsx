@@ -5,6 +5,7 @@ import {
   CloudSun,
   Verified,
   ShieldCheck,
+  ImageOff,
 } from "lucide-react";
 import { Project } from "../../../types/type";
 import { ProjectStatus as P } from "../../../types/projectStatus.dto";
@@ -123,6 +124,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({
   const [versionMenuAnchor, setVersionMenuAnchor] =
     useState<null | HTMLElement>(null);
   const [siteInspection, setSiteInspection] = useState([]);
+  const [mySiteVisit,setMySiteVisit] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [versionBtn, setVersionBtn] = useState(false);
   const { User } = useAuthStore((state) => ({
@@ -157,7 +159,6 @@ const FormHeader: React.FC<FormHeaderProps> = ({
     versionName?.includes("Not Started");
 
 
-  useEffect(() => {
     const fetchSiteVisit = async () => {
       if (!project?.projectNumber) return;
   
@@ -179,11 +180,12 @@ const FormHeader: React.FC<FormHeaderProps> = ({
             item.Field_EngineerReferences.some(
               (fe: any) => norm(fe?.display_value) === me
             );
+
+            setMySiteVisit(item)
   
           const completionEmpty = !item?.Site_Viste_Completion?.trim();
   
-          // Only true if both assignedToMe AND completionEmpty
-        console.log("first",assignedToMe , completionEmpty)
+
 
           return assignedToMe && completionEmpty;
         });
@@ -193,7 +195,8 @@ const FormHeader: React.FC<FormHeaderProps> = ({
         console.error("Failed to fetch site visit", err);
       }
     };
-  
+
+  useEffect(() => {
     fetchSiteVisit();
   }, [project?.projectNumber, userName]);
   
@@ -273,6 +276,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({
         </Box>
 
         <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          {project.projectFolderWorkdrive !==null?(
           <a target="blank" href={`/inspection-photographs/${project?._id}`}>
             <IconButton
               sx={{
@@ -285,6 +289,19 @@ const FormHeader: React.FC<FormHeaderProps> = ({
               <Images style={{ color: "#3A52BC" }} />
             </IconButton>
           </a>
+          ):(
+            <IconButton
+            disabled
+            sx={{
+                border: "1px solid gray",
+                borderRadius: 1,
+                "&:hover": { backgroundColor: "#eee" },
+              }}
+              title="WD not found"
+            >
+              <ImageOff style={{ color: "gray" }} />
+            </IconButton>
+          )}
 
           <IconButton
             sx={{
@@ -401,13 +418,15 @@ const FormHeader: React.FC<FormHeaderProps> = ({
               {format(new Date(project.dateOfLoss), "MMM dd, yyyy")}
             </Typography>
           )} */}
-          {siteInspection.length <1 && (
+          
+
+<b className="-mr-4"> SV Status:</b>
+
+{siteInspection.length <1 && (
             <p className="text-red-600 float-end">
               Site Inpection is not assigned
             </p>
           )}
-
-<b className="-mr-4"> SV Status:</b>
 
           {siteInspection.map((item, idx) => {
             const engineerName =
@@ -438,7 +457,8 @@ const FormHeader: React.FC<FormHeaderProps> = ({
       <SiteInspectionModal
         open={isModalOpen}
         onClose={handleCloseModal}
-        siteInspection={siteInspection}
+        siteInspection={mySiteVisit}
+        fetchSiteVisit={fetchSiteVisit}
       />
     </Paper>
   );

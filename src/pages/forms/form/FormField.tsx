@@ -31,7 +31,6 @@ import { toast } from 'react-toastify';
 import { FormFields, UploadedFile } from '../../../types/forms';
 import { FileText, MessageSquare } from 'lucide-react';
 import CameraModal from './CameraModal';
- // Import the CameraModal component
 
 interface EnhancedFormFieldProps {
   field: FormField;
@@ -49,7 +48,6 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
   readOnly,
   onInputChange,
   onOpenChat,
-  onOpenGallery,
   projectId
 }) => {
   const quillRef = useRef<ReactQuill>(null);
@@ -58,33 +56,49 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [cameraOpen, setCameraOpen] = useState(false); // State for camera modal
 
-  // Initialize uploaded files from value
-  useEffect(() => {
-    if (field.fieldType === 'images' || field.fieldType === 'file') {
-      if (Array.isArray(value)) {
-        setUploadedFiles(value.map(normalizeFile));
-      } else if (value && typeof value === 'object') {
-        setUploadedFiles([normalizeFile(value)]);
-      } else {
-        setUploadedFiles([]);
-      }
-    }
-  }, [field.fieldType, value]);
+// 2) Initialize safely (filter out null/undefined)
 
-  const normalizeFile = useCallback((file: any): UploadedFile => ({
-    _id: file?._id || file.id || Math.random().toString(36).substring(2, 9),
-    slug: file.slug,
-    url: file.url || file.path || file.uri,
-    thumbnail: file.thumbnail,
-    workdriveId: file.workdriveId,
-    filename: file.filename || file.name || 'Unnamed file',
-    size: file.size,
-    localPath: file.localPath,
-    includedInReport: file.includedInReport,
-    type: file.type || file.mimeType?.split('/')[0] || 'file',
-    mimeType: file.mimeType,
-    originalName: file.originalName || file.filename
-  }), []);
+
+// 1) Make normalizeFile null-safe
+const normalizeFile = useCallback((file: any): UploadedFile => {
+  const url = file?.url ?? file?.path ?? file?.uri ?? file?.location ?? "";
+  const isImageUrl = /\.(jpe?g|png|gif|webp|bmp|tiff)$/i.test(url);
+
+  return {
+    _id:
+      file?._id ??
+      file?.id ??
+      Math.random().toString(36).slice(2, 11),
+    slug: file?.slug ?? "",
+    url,
+    thumbnail: file?.thumbnail ?? (isImageUrl ? url : ""),
+    workdriveId: file?.workdriveId ?? "",
+    filename: file?.filename ?? file?.name ?? "Unnamed file",
+    size: file?.size ?? 0,
+    localPath: file?.localPath ?? "",
+    includedInReport: Boolean(file?.includedInReport),
+    type:
+      file?.type ??
+      file?.mimeType?.split("/")[0] ??
+      (isImageUrl ? "image" : "file"),
+    mimeType: file?.mimeType ?? "",
+    originalName: file?.originalName ?? file?.filename ?? file?.name ?? "file",
+  };
+}, []);
+
+useEffect(() => {
+  if (field.fieldType === "images" || field.fieldType === "file") {
+    if (Array.isArray(value)) {
+      const cleaned = value.filter(Boolean).map(normalizeFile);
+      setUploadedFiles(cleaned);
+    } else if (value && typeof value === "object") {
+      setUploadedFiles([normalizeFile(value)]);
+    } else {
+      setUploadedFiles([]);
+    }
+  }
+}, [field.fieldType, value, normalizeFile]);
+
 
   const quillModules = {
     toolbar: [
@@ -97,12 +111,13 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
     ]
   };
 
+
   const handleFileUpload = useCallback(async (acceptedFiles: File[]) => {
     if (!projectId || !field.folder || readOnly) return;
-
+  
     setIsUploading(true);
     setUploadProgress(0);
-
+  
     const formData = new FormData();
     formData.append('fieldId', field.id);
     formData.append('folder', field.folder);
@@ -110,7 +125,7 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
     acceptedFiles.forEach(file => {
       formData.append('files', file);
     });
-
+  
     try {
       const response = await axiosInstance.post(
         `/media/${projectId}?folder=${encodeURIComponent(field.folder)}`,
@@ -125,13 +140,21 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
           }
         }
       );
-
+  
       if (response.data?.payload) {
-        const newFiles = response.data.payload.map(normalizeFile);
-        const updatedFiles = [...uploadedFiles, ...newFiles];
+        const newFiles = (response.data.payload as any[])
+          .filter(Boolean)
+          .map(normalizeFile);
+      
+        // ensure thumbnails for images
+        const withThumbs = newFiles.map((f) =>
+          !f.thumbnail && f.type === "image" ? { ...f, thumbnail: f.url } : f
+        );
+      
+        const updatedFiles = [...uploadedFiles, ...withThumbs];
         setUploadedFiles(updatedFiles);
         onInputChange(field.id, updatedFiles);
-        toast.success(`${newFiles.length} file(s) uploaded successfully!`);
+        toast.success(`${withThumbs.length} file(s) uploaded successfully!`);
       }
     } catch (error) {
       console.error('Upload error:', error);
@@ -168,7 +191,6 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
     maxSize: 50 * 1024 * 1024 // 50MB
   });
 
-  // Handle camera capture and upload
   const handleCameraCapture = async (files: File[]) => {
     try {
       await handleFileUpload(files);
@@ -178,6 +200,7 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
   };
 
   const renderFilePreview = useCallback((file: UploadedFile) => {
+    
     return (
       <Card key={file._id} sx={{ position: 'relative', height: '100%' }}>
         {!readOnly && (
@@ -393,14 +416,7 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
                       <Button variant="outlined" disabled={isUploading}>
                         Select Files
                       </Button>
-                  <Button
-                    variant="contained"
-                    startIcon={<CameraAlt />}
-                    onClick={() => setCameraOpen(true)}
-                    sx={{ textTransform: 'none' }}
-                  >
-                    Take Photo
-                  </Button>
+                  
                 </div>
                     </Box>
                   )}
@@ -419,12 +435,13 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
                 </Box>
                 
                 <Grid container spacing={2}>
-                  {uploadedFiles.map((file) => (
-                    <Grid item={true} xs={6} sm={4} md={3} key={file._id}>
-                      {renderFilePreview(file)}
-                    </Grid>
-                  ))}
-                </Grid>
+  {uploadedFiles.map((file, idx) => (
+    <Grid item xs={6} sm={4} md={3} key={file._id || idx}>
+      {renderFilePreview(file)}
+    </Grid>
+  ))}
+</Grid>
+
               </Box>
             )}
           </Box>
@@ -477,7 +494,7 @@ const FormField: React.FC<EnhancedFormFieldProps> = ({
           <Box sx={{ display: 'flex', gap: 0.5 }}>
             {(field.fieldType === 'images' || field.fieldType === 'file') && (
               <Tooltip title="Gallery">
-                <IconButton size="small" onClick={() => onOpenGallery(field.id)}>
+                <IconButton size="small"  onClick={() => setCameraOpen(true)}>
                   <CameraAlt fontSize="small" />
                 </IconButton>
               </Tooltip>

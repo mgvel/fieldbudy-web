@@ -28,7 +28,9 @@ export function useAuth() {
         position: "top-right",
         autoClose: 3000,
       });
-      navigate('/dashboard');
+      navigate(user.isDummyPassword ? '/update-password' : '/dashboard', { 
+        replace: true 
+      });
     },
     onError: (error: Error) => {
       toast.error(error.message || 'Login failed. Please try again.', {
@@ -37,6 +39,7 @@ export function useAuth() {
       });
     },
   });
+
 
   const logoutMutation = useMutation({
     mutationFn: () => authService.logout(),

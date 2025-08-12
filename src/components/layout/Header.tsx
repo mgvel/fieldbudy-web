@@ -69,14 +69,25 @@ const Header = ({ auth }: { auth: Auth }) => {
     }
   };
 
+  // const handleNotificationClick = (notification: Notification) => {
+  //   if (notification.formId && notification.fieldId && notification.formSlug) {
+  //     localStorage.setItem("openChat", JSON.stringify({
+  //       formId: notification.formId,
+  //       fieldId: notification.fieldId,
+  //     }));
+  //     navigate(`/form/${notification.formSlug}`);
+  //   }
+  // };
+
   const handleNotificationClick = (notification: Notification) => {
-    if (notification.formId && notification.fieldId && notification.formSlug) {
-      localStorage.setItem("openChat", JSON.stringify({
-        formId: notification.formId,
-        fieldId: notification.fieldId,
-      }));
-      navigate(`/field-buddy/${notification.formSlug}`);
-    }
+    // 1. Store chat reference in localStorage
+    localStorage.setItem("openChat", JSON.stringify({
+      formId: notification.formId,
+      fieldId: notification.fieldId
+    }));
+    
+    // 2. Navigate to the form
+    navigate(`/form/${notification.formSlug}`);
   };
 
   useEffect(() => {
@@ -160,7 +171,7 @@ const Header = ({ auth }: { auth: Auth }) => {
           <Typography className="px-4 pt-2 font-medium text-gray-800">Last Updates</Typography>
           <Divider />
           {notifications.length > 0 ? (
-            notifications.slice(0, 6).map((n) => (
+            notifications.map((n) => (
               <MenuItem key={n._id} divider>
                 <div className="flex flex-col w-full">
                   <button
@@ -209,7 +220,7 @@ const Header = ({ auth }: { auth: Auth }) => {
             </div>
           </MenuItem>
           <Divider />
-          <MenuItem component="a" href="/profile">Profile</MenuItem>
+          <MenuItem component="a" href="/update-password">Update Password</MenuItem>
           <MenuItem>Feedback</MenuItem>
           <Divider />
           <MenuItem disabled>

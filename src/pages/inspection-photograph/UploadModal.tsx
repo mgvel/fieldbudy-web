@@ -64,7 +64,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
     </div>
   );
 
-  // console.log("folderName",folderName)
   
 
   const renderUploadStatus = () => (
@@ -93,7 +92,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
             ? "Upload in Zoho drive"
             : uploadSession?.status === "completed"
             ? "Upload Complete"
-            : "Upload Issues"}
+            : "Uploading local to server"}
         </h3>
       </div>
 

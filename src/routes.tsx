@@ -28,6 +28,8 @@ import ArchivedProjects from "./pages/project/ArchivedProjects";
 import ArchivedProjectDetail from "./pages/project/ArchivedProjectDetail";
 import SuspendedProject from "./pages/project/SuspendedProject";
 import UsersList from "./pages/UsersList";
+import { UpdatePassword } from "./pages/UpdatePassword";
+import { RequireDummyPassword } from "./components/auth/RequireDummyPassword";
 
 export const routes = [
   {
@@ -43,6 +45,13 @@ export const routes = [
   {
     path: "/set-new-password",
     element: <SetNewPassword />,
+  },
+  {
+    path:"/update-password",
+    element:
+    (<RequireDummyPassword>
+      <UpdatePassword />
+    </RequireDummyPassword>)
   },
   {
     path: "/",

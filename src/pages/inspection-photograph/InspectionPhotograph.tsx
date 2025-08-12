@@ -63,7 +63,7 @@ const InspectionPhotographs: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [showCreateFolder, setShowCreateFolder] = useState(false);
   const [showCaptionModal, setShowCaptionModal] = useState(false);
-  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(true);
   const [currentCaption, setCurrentCaption] = useState({ id: "", text: "" });
   const [overlayImage, setOverlayImage] = useState<string | null>(null);
   const [overlayFilename, setOverlayFilename] = useState("");
@@ -85,7 +85,7 @@ const InspectionPhotographs: React.FC = () => {
 
   const statusCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-
+console.log("failedUploads",failedUploads)
   const fetchFolders = useCallback(async () => {
     try {
       setLoading(true);
@@ -106,7 +106,6 @@ const InspectionPhotographs: React.FC = () => {
     }
   }, [projectId, parentFolders]);
 
-  console.log("folders",folders)
 
   const fetchFiles = useCallback(async () => {
     try {
@@ -581,14 +580,14 @@ const navigate = useNavigate()
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <button
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">
+          {/* <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft size={20} />
             <span className="font-medium">Back</span>
-          </button>
+          </button> */}
 
           <div className="text-center">
             <h1 className="text-xl font-bold text-gray-900">
@@ -700,7 +699,7 @@ const navigate = useNavigate()
               <AlertCircle size={18} />
               Failed Uploads
             </h2>
-            <span>{failedUploads.projectName} cccc</span> <span>{failedUploads.folderName}</span>
+            <span>{failedUploads.projectName}</span> <span>{failedUploads.folderName}</span>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {failedUploads.map((upload, index) => (
                 <div
@@ -708,12 +707,12 @@ const navigate = useNavigate()
                   className="border border-red-100 rounded-lg p-3 shadow-sm bg-white"
                 >
                   <img
-                    src={upload.base64Data}
+                    src={`${PROXY_BASE_URL}/${upload.filePath}`}
                     alt="Failed Upload"
                     className="w-full h-32 object-contain rounded bg-gray-100"
                   />
                   <div className="mt-2 text-xs text-red-600 line-clamp-2">
-                    {upload.error || "Unknown Error"}
+                    {upload.lastError || "Unknown Error"}
                   </div>
                  
                 </div>
@@ -763,7 +762,7 @@ const navigate = useNavigate()
         />
       )}
 
-      {/* Upload Modal */}
+    {parentFolders.length > 1 && (
       <UploadModal
         isOpen={showUploadModal}
         onClose={() => setShowUploadModal(false)}
@@ -778,6 +777,7 @@ const navigate = useNavigate()
         projectName={projectName}
         folderName={currentFolderName}
       />
+       )}
 
       {/* Create Folder Modal */}
       {showCreateFolder && (

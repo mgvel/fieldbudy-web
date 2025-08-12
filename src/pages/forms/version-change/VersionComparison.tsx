@@ -31,7 +31,6 @@ const VersionComparison: React.FC = () => {
         if (!response.data.payload) throw new Error('No version data received');
 
         const data = response.data.payload;
-        console.log("data",data)
         setVersionData(data);
 
         const tabParam = searchParams.get('tab');
