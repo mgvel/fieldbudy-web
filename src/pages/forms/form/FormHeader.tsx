@@ -32,6 +32,7 @@ interface FormHeaderProps {
   versionName: string;
   lastSaved?: string;
   onDownload: () => void;
+  loadingReport:boolean,
   onUpdateStatus: (newStatus: P) => void;
   isSaving: string;
   setVersionModalOpen: () => void;
@@ -115,6 +116,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({
   lastSaved,
   onUpdateStatus,
   isSaving,
+  loadingReport,
   setVersionModalOpen,
 }) => {
   const [statusMenuAnchor, setStatusMenuAnchor] = useState<null | HTMLElement>(
@@ -327,7 +329,8 @@ const FormHeader: React.FC<FormHeaderProps> = ({
             }}
             title="Download Report"
           >
-            <DownloadCloudIcon onClick={onDownload} />
+           
+           {loadingReport?<CircularProgress size={25} color="inherit"/> : <DownloadCloudIcon onClick={onDownload} />}
           </IconButton>
 
           <Button

@@ -41,6 +41,7 @@ const FormComponent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [lastSaved, setLastSaved] = useState<string>("");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [loadingReport, setLoadingReport] = useState(false)
   
   // Modal states
   const [chatOpen, setChatOpen] = useState(false);
@@ -180,14 +181,9 @@ const FormComponent: React.FC = () => {
         ...counts
       };
 
-      const response = await axiosInstance.post(
-        `${API_BASE_URL}/form/create/${project.form.slug}`,
+      const response = await axiosInstance.patch(
+        `${API_BASE_URL}/form/save/${project.form.slug}`,
          payload,
-        {
-          params: {
-            versionName: ProjectStatus.IDPInProgressByFE,
-          },
-        }
       );
 
       const now = new Date();
@@ -303,17 +299,49 @@ const FormComponent: React.FC = () => {
     setActiveTab(newTab);
   }, []);
 
-  const handleDownload = useCallback(async () => {
+  const handleDownload = async () => {
     if (!formData?.slug) return;
     
     try {
-      const reportUrl = `/field-buddy/report/${formData.slug}`;
-      window.open(reportUrl, '_blank');
+      setLoadingReport(true);
+      const res = await axiosInstance.get(`/project/generate-report/${project?.slug}`, {
+        responseType: 'blob', // Important for binary files
+      });
+  
+      // Create a blob from the response
+      const blob = new Blob([res.data], { type: res.headers['content-type'] });
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // Extract filename from headers or use a default
+      const contentDisposition = res.headers['content-disposition'];
+      let filename = 'report.docx';
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+        if (filenameMatch && filenameMatch[1]) {
+          filename = filenameMatch[1];
+        }
+      }
+      
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      setLoadingReport(false);
+      toast.success('Report downloaded successfully');
     } catch (error) {
       console.error('Error generating report:', error);
       toast.error('Failed to generate report');
+      setLoadingReport(false);
     }
-  }, [formData?.slug]);
+  };
 
   const handleOpenChat = useCallback((fieldId: string) => {
     setChatFieldId(fieldId);
@@ -422,6 +450,7 @@ useEffect(() => {
         versionName={versionName}
         lastSaved={lastSaved}
         onDownload={handleDownload}
+        loadingReport={loadingReport}
         onUpdateStatus={handleUpdateStatus}
         onBack={handleBack}
         isSaving={isSaving}

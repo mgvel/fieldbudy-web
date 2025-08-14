@@ -54,6 +54,7 @@ interface FileItem {
 
 const InspectionPhotographs: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
+  const [projectData,setProjectData] = useState({})
   const [parentFolders, setParentFolders] = useState<Folder[]>([]);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -85,7 +86,6 @@ const InspectionPhotographs: React.FC = () => {
 
   const statusCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-console.log("failedUploads",failedUploads)
   const fetchFolders = useCallback(async () => {
     try {
       setLoading(true);
@@ -570,35 +570,41 @@ console.log("failedUploads",failedUploads)
     setShowCaptionModal(true);
   };
 
+  useEffect(()=>{
+    const fetchProject= async()=>{
+      const {data} = await axiosInstance.get(`/project/${projectId}`)
+      setProjectData(data.payload.project)
+    }
+    fetchProject()
+  },[])
+
   const hasActiveUploadSession =
     uploadSession?.status === "in-progress" ||
     uploadSession?.status === "completed" ||
     uploadSession?.status === "failed";
 
-const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">
-          {/* <button
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft size={20} />
-            <span className="font-medium">Back</span>
-          </button> */}
+
 
           <div className="text-center">
             <h1 className="text-xl font-bold text-gray-900">
-              Inspection Photographs
+            Inspection Photographs <span className="text-gray-500">(  {projectData && projectData.projectName} ) </span> 
             </h1>
             <p className="text-sm text-gray-500">
               Manage and annotate your inspection images
             </p>
           </div>
 
-          <div className="w-16"></div>
+          <div className="absolute right-10 bg-slate-200 p-2 rounded-lg cursor-pointer">
+            <a target="_blank" href={projectData.projectFolderWorkdrive}>
+            <img className="w-7" src="https://flow-in-public.nimbuspop.com/flow-apps/zoho_workdrive.png" alt="" />
+            </a>
+           
+          </div>
         </div>
       </div>
 
