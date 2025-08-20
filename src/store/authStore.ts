@@ -1,6 +1,7 @@
+// store/authStore.ts
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { User } from '../types/user';
+import type { User } from '../types/user';
 
 interface AuthState {
   token: string | null;
@@ -8,16 +9,19 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
+  setUser: (patch: Partial<User>) => void; // <-- add this
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       token: null,
       user: null,
       isAuthenticated: false,
       login: (token, user) => set({ token, user, isAuthenticated: true }),
       logout: () => set({ token: null, user: null, isAuthenticated: false }),
+      setUser: (patch) =>
+        set((state) => state.user ? { user: { ...state.user, ...patch } } : state),
     }),
     {
       name: 'auth-storage',

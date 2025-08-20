@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { Eye, EyeOff } from 'lucide-react';
@@ -14,12 +14,12 @@ interface SetNewPasswordFormData {
 export function SetNewPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
   
   // Get token from query params
-  const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  // const queryParams = new URLSearchParams(location.search);
+  const {token} = useParams<{ token: string }>();
   
   const { 
     register, 

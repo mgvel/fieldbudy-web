@@ -43,16 +43,17 @@ export const routes = [
     element: <ForgotPassword />,
   },
   {
-    path: "/set-new-password",
+    path: "/set-new-password/:token",
     element: <SetNewPassword />,
   },
   {
     path:"/update-password",
-    element:
-    (<RequireDummyPassword>
-      <UpdatePassword />
-    </RequireDummyPassword>)
-  },
+    element: (
+      // <RequireDummyPassword>
+        <UpdatePassword />
+      // </RequireDummyPassword>
+    )
+  },  
   {
     path: "/",
     element: (

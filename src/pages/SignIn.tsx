@@ -162,7 +162,7 @@ export function SignIn() {
                   <input
                     id="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded transition-colors"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded transition-colors"
                     {...register('rememberMe')}
                   />
                   <label 
@@ -178,20 +178,12 @@ export function SignIn() {
                 <button
                   type="submit"
                   disabled={isLoggingIn}
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isLoggingIn ? 'Signing in...' : 'Sign in'}
                 </button>
               </div>
               
-              {/* <div className="text-sm text-center">
-                <Link 
-                  to="/set-new-password" 
-                  className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
-                >
-                  Registered New Users
-                </Link>
-              </div> */}
             </form>
 
         </div>
