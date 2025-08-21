@@ -450,6 +450,13 @@ const FormHeader: React.FC<FormHeaderProps> = ({
                       ? `${engineerName}`
                       : engineerName
                   }
+
+                  onClick={() => {
+                    if(!isCompleted && userName === engineerName) {
+                      handleOpenModal();
+                    }
+                  }}
+                  className="cursor-pointer"
                 />
               </div>
             );
