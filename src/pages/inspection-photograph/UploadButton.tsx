@@ -23,7 +23,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
       }`}
       title="Upload Images"
     >
-      {isUploading || hasActiveSession ? (
+      {isUploading ? (
         <CircularProgress size={24} sx={{ color: 'white' }} />
       ) : (
         <Upload className="w-6 h-6 text-white" />

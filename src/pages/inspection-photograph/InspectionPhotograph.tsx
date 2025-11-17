@@ -19,9 +19,7 @@ import { CircularProgress } from "@mui/material";
 import FileGrid from "./FileGrid";
 import UploadModal from "./UploadModal";
 import UploadButton from "./UploadButton";
-// import UploadModal from "./UploadModal";
-// import UploadButton from "./UploadButton";
-// import FileGrid from "./FileGrid";
+
 
 interface Folder {
   _id: string;
@@ -133,6 +131,7 @@ const InspectionPhotographs: React.FC = () => {
 
     try {
       const response = await axiosInstance.get(`/folder/${folderId}`);
+      console.log("resxxxx",response)
       setParentFolders([
         ...response.data.payload.folder.parentFolders,
         response.data.payload.folder,
@@ -165,6 +164,60 @@ const InspectionPhotographs: React.FC = () => {
   });
 
 
+  // const checkUploadStatus = async (sessionId: string) => {
+  //   try {
+  //     const response = await axiosInstance.get(
+  //       `/media/bulk/status/${sessionId}`
+  //     );
+  //     const status = response.data.payload;
+      
+  //     const updatedSession = {
+  //       ...status,
+  //       sessionId: status._id || sessionId,
+  //       total: status.totalCount,
+  //       completed: status.uploadedCount,
+  //       failed: status.failedCount,
+  //       status: status.status,
+  //     };
+      
+  //     setUploadSession(updatedSession);
+  //     setUploadProgress(Math.round((status.uploadedCount / status.totalCount) * 100));
+  
+  //     if (status.failedUploads?.length > 0) {
+  //       setFailedUploads(status.failedUploads);
+  //     }
+  
+  //     // Clear everything when upload is fully completed
+  //     if (status.status === "completed" || status.status === "failed") {
+  //       if (statusCheckIntervalRef.current) {
+  //         clearInterval(statusCheckIntervalRef.current);
+  //         statusCheckIntervalRef.current = null;
+  //       }
+        
+  //       setIsUploading(false);
+        
+  //       // Only clear session if fully completed
+  //       if (status.status === "completed") {
+  //         setTimeout(() => {
+  //           setUploadSession(null);
+  //           setUploadProgress(0);
+  //           setFailedUploads([]);
+  //         }, 2000); // Small delay to show completion
+  //       }
+  
+  //       fetchFiles(); // Refresh file list
+  //     }
+  //   } catch (error) {
+  //     console.error("Status check error:", error);
+  //     if (statusCheckIntervalRef.current) {
+  //       clearInterval(statusCheckIntervalRef.current);
+  //       statusCheckIntervalRef.current = null;
+  //     }
+  //     setIsUploading(false);
+  //     toast.error("Failed to check upload status");
+  //   }
+  // };
+  
   const checkUploadStatus = async (sessionId: string) => {
     try {
       const response = await axiosInstance.get(
@@ -180,6 +233,8 @@ const InspectionPhotographs: React.FC = () => {
         failed: status.failedCount,
         status: status.status,
       };
+
+      console.log("updatedSession",updatedSession)
       
       setUploadSession(updatedSession);
       setUploadProgress(Math.round((status.uploadedCount / status.totalCount) * 100));
@@ -188,24 +243,26 @@ const InspectionPhotographs: React.FC = () => {
         setFailedUploads(status.failedUploads);
       }
   
-      // Clear everything when upload is fully completed
+      // Clear everything when upload is fully completed OR failed
       if (status.status === "completed" || status.status === "failed") {
         if (statusCheckIntervalRef.current) {
           clearInterval(statusCheckIntervalRef.current);
           statusCheckIntervalRef.current = null;
+          // isUploading(true)
         }
         
         setIsUploading(false);
+        setUploadProgress(0); // Reset progress for failed uploads
         
         // Only clear session if fully completed
         if (status.status === "completed") {
           setTimeout(() => {
             setUploadSession(null);
-            setUploadProgress(0);
             setFailedUploads([]);
-          }, 2000); // Small delay to show completion
+          }, 2000);
         }
-  
+        
+        // For failed status, keep the session but stop loading states
         fetchFiles(); // Refresh file list
       }
     } catch (error) {
@@ -215,95 +272,100 @@ const InspectionPhotographs: React.FC = () => {
         statusCheckIntervalRef.current = null;
       }
       setIsUploading(false);
+      setUploadProgress(0); // Reset progress on error
       toast.error("Failed to check upload status");
     }
   };
-  
-  const handleUpload = async (uploadFiles: File[]) => {
-    if (!uploadFiles.length) {
-      toast.warn("Please select files to upload");
-      return;
+
+
+const handleUpload = async (uploadFiles: File[]) => {
+  if (!uploadFiles.length) {
+    toast.warn("Please select files to upload");
+    return;
+  }
+
+  if (!parentFolders.length) {
+    toast.warn("Please select a folder first");
+    return;
+  }
+
+  // Clear any existing session
+  if (statusCheckIntervalRef.current) {
+    clearInterval(statusCheckIntervalRef.current);
+    statusCheckIntervalRef.current = null;
+  }
+
+  const folderId = parentFolders[parentFolders.length - 1]._id;
+  setIsUploading(true);
+  setUploadProgress(0);
+  setUploadSession(null);
+  setFailedUploads([]);
+
+  try {
+    const formData = new FormData();
+    formData.append('projectId', projectId || '');
+    formData.append('folder', folderId);
+    
+    uploadFiles.forEach((file) => {
+      formData.append('images', file, file.name);
+    });
+
+    const response = await axiosInstance.post('/media/bulk/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: (progressEvent) => {
+        if (progressEvent.total) {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded / progressEvent.total) * 100
+          );
+          setUploadProgress(percentCompleted);
+        }
+      },
+    });
+
+    const sessionId = response.data.payload.sessionId;
+    const newSession: UploadSession = {
+      sessionId,
+      total: uploadFiles.length,
+      completed: 0,
+      failed: 0,
+      status: "in-progress",
+    };
+    setUploadSession(newSession);
+
+    // Start polling for status
+    const interval = setInterval(() => {
+      checkUploadStatus(sessionId);
+    }, 3000);
+    statusCheckIntervalRef.current = interval;
+
+    toast.success("Upload started successfully");
+  } catch (error: any) {
+    console.error("Upload error:", error);
+    let errorMessage = "Upload failed";
+    if (error.response) {
+      if (error.response.status === 413) {
+        errorMessage = "File too large";
+      } else if (error.response.data?.message) {
+        errorMessage = error.response.data.message;
+      }
     }
-  
-    if (!parentFolders.length) {
-      toast.warn("Please select a folder first");
-      return;
-    }
-  
-    // Clear any existing session
+
+    toast.error(errorMessage);
+    // Reset all loading states on upload failure
+    setIsUploading(false);
+    setUploadProgress(0);
+    setUploadSession(null);
+    
     if (statusCheckIntervalRef.current) {
       clearInterval(statusCheckIntervalRef.current);
       statusCheckIntervalRef.current = null;
     }
+  }
+};
   
-    const folderId = parentFolders[parentFolders.length - 1]._id;
-    setIsUploading(true);
-    setUploadProgress(0);
-    setUploadSession(null);
-    setFailedUploads([]);
-  
-    try {
-      const formData = new FormData();
-      formData.append('projectId', projectId || '');
-      formData.append('folder', folderId);
-      
-      uploadFiles.forEach((file) => {
-        formData.append('images', file, file.name);
-      });
-  
-      const response = await axiosInstance.post('/media/bulk/images', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          if (progressEvent.total) {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded / progressEvent.total) * 100
-            );
-            setUploadProgress(percentCompleted);
-          }
-        },
-      });
-  
-      const sessionId = response.data.payload.sessionId;
-      const newSession: UploadSession = {
-        sessionId,
-        total: uploadFiles.length,
-        completed: 0,
-        failed: 0,
-        status: "in-progress",
-      };
-      setUploadSession(newSession);
-  
-      // Start polling for status
-      const interval = setInterval(() => {
-        checkUploadStatus(sessionId);
-      }, 3000);
-      statusCheckIntervalRef.current = interval;
-  
-      toast.success("Upload started successfully");
-    } catch (error: any) {
-      console.error("Upload error:", error);
-      let errorMessage = "Upload failed";
-      if (error.response) {
-        if (error.response.status === 413) {
-          errorMessage = "File too large";
-        } else if (error.response.data?.message) {
-          errorMessage = error.response.data.message;
-        }
-      }
-  
-      toast.error(errorMessage);
-      setIsUploading(false);
-      setUploadProgress(0);
-      
-      if (statusCheckIntervalRef.current) {
-        clearInterval(statusCheckIntervalRef.current);
-        statusCheckIntervalRef.current = null;
-      }
-    }
-  };
-  
+
 
   const fetchSessionStatus = useCallback(async () => {
     if (!projectId) return;
@@ -506,7 +568,26 @@ const InspectionPhotographs: React.FC = () => {
     }
   };
 
-
+  const stopUploadProcess = () => {
+    if (statusCheckIntervalRef.current) {
+      clearInterval(statusCheckIntervalRef.current);
+      statusCheckIntervalRef.current = null;
+    }
+    setIsUploading(false);
+    setUploadProgress(0);
+    // Don't clear uploadSession here so we can still see failed uploads
+  };
+  
+  // Add this to your useEffect cleanup
+  useEffect(() => {
+    fetchFolders();
+    fetchFiles();
+    fetchSessionStatus();
+  
+    return () => {
+      stopUploadProcess(); // Use the cleanup function
+    };
+  }, [fetchFolders, fetchFiles, fetchSessionStatus]);
 
   const handleRetryUpload = async (upload: any) => {
     if (!projectId || !parentFolders.length) return;

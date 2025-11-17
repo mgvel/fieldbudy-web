@@ -102,7 +102,7 @@ const FileGrid: React.FC<FileGridProps> = ({
               <div
                 className="w-full h-40 bg-cover bg-center bg-gray-100"
                 style={{
-                  backgroundImage: `url(https://previewengine-accl.zohoexternal.com/image/WD/${file.workdriveId})`,
+                  backgroundImage: `url(https://previewengine-accl.zoho.com/image/WD/${file.workdriveId})`,
                 }}
               />
 

@@ -77,16 +77,6 @@ const UploadModal: React.FC<UploadModalProps> = ({
           <AlertCircle className="text-yellow-500" size={20} />
         )}
 
-{/* {uploadSession?.status !== "in-progress" && (
-  <button
-    onClick={onBrowseClick}
-    className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
-  >
-    <Upload size={16} />
-    Upload More Files
-  </button>
-)} */}
-
         <h3 className="text-sm font-semibold">
           {uploadSession?.status === "in-progress"
             ? "Upload in Zoho drive"
@@ -174,7 +164,7 @@ const UploadModal: React.FC<UploadModalProps> = ({
           </button>
         </div>
         
-        {isUploading || uploadSession?.status === "in-progress" || uploadSession?.status === "completed" || uploadSession?.status === "failed"
+        {isUploading || uploadSession?.status === "in-progress" || uploadSession?.status === "completed" 
           ? renderUploadStatus()
           : renderUploadInterface()}
       </div>
