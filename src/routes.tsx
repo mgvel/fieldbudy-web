@@ -29,7 +29,7 @@ import ArchivedProjectDetail from "./pages/project/ArchivedProjectDetail";
 import SuspendedProject from "./pages/project/SuspendedProject";
 import UsersList from "./pages/UsersList";
 import { UpdatePassword } from "./pages/UpdatePassword";
-import { RequireDummyPassword } from "./components/auth/RequireDummyPassword";
+
 
 export const routes = [
   {
