@@ -29,6 +29,7 @@ import ArchivedProjectDetail from "./pages/project/ArchivedProjectDetail";
 import SuspendedProject from "./pages/project/SuspendedProject";
 import UsersList from "./pages/UsersList";
 import { UpdatePassword } from "./pages/UpdatePassword";
+import PendingReportApprover from "./pages/widgets/PendingReportApprover";
 
 
 export const routes = [
@@ -78,6 +79,7 @@ export const routes = [
       { path: "my-rejected-fb", element: <MyRejectedFieldBuddy /> },
       { path: "reports-to-be-reviewed", element: <ReportstobeReviewed /> },
       { path: "fb-pending-review", element: <MyPendingFbPendingReview /> },
+      {path: "reports-to-approve", element: <PendingReportApprover /> },
       { path: "fb-pending-report-review", element: <ReportToREviewByEM /> },
       { path: "pending-draft", element: <PendingDraft /> },
       { path: "pending-rejected-review", element: <PendindRejectedReview /> },

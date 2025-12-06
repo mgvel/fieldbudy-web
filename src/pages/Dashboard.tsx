@@ -421,6 +421,35 @@ export const Dashboard = () => {
           </>
         );
 
+       case "Report Approver":
+        return (
+          <>
+            {widgets
+              .filter((widget) => widget.id === "my_assigned_project")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label={widget.title}
+                  color="blue"
+                  link="/projects"
+                />
+              ))}
+
+            {widgets
+              .filter((widget) => widget.id === "my_pending_report_review_as_ra")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Reports to Approve"
+                  color="purple"
+                  link="/reports-to-approve"
+                />
+              ))}
+          </>
+        ); 
+
       default:
         return (
           <>

@@ -80,14 +80,18 @@ const statusRoleMap: Record<string, Record<string, P[]>> = {
     "Technical Writer": [P.DraftReportInProgress],
   },
   [P.DraftReportApprovedByFE]: {
-    "Project Coordinator": [P.CommentsReviewed],
+    "Report Approver": [P.ReportApprovedByRA, P.ReportRejectedByRA],
   },
-  [P.CommentsReviewed]: {
-    "Field Engineer": [P.GenerateFinalReport, P.ReportFinalized],
-  },
-  [P.ReportFinalized]: {
-    "Field Engineer": [P.GenerateFinalReport],
-  },
+
+  // [P.DraftReportApprovedByFE]: {
+  //   "Project Coordinator": [P.CommentsReviewed],
+  // },
+  // [P.CommentsReviewed]: {
+  //   "Field Engineer": [P.GenerateFinalReport, P.ReportFinalized],
+  // },
+  // [P.ReportFinalized]: {
+  //   "Field Engineer": [P.GenerateFinalReport],
+  // },
 };
 
 const statusLabelMap: Record<P, string> = {

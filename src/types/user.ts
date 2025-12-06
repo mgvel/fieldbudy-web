@@ -5,6 +5,7 @@ export enum UserRole {
   TechnicalWriter = "Technical Writer",
   OperationsManager = "Operations Manager",
   QualityReviewer = "Quality Reviewer",
+  ReportApprover = "Report Approver",
   ExternalFieldEngineer = "External Field Engineer",
   BusinessDevelopmentManager = "Business Development Manager",
   NexusEngineers = "Nexus Engineers",

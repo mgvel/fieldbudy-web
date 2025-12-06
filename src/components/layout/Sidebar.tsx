@@ -42,6 +42,7 @@ export function Sidebar() {
     { name: 'Reports to Review', href: '/fb-pending-report-review', icon: FileSearch, roles: [UserRole.EngineeringManager], parent: 'projects' },
     { name: 'Pending Draft Reports', href: '/pending-draft', icon: FileText, roles: [UserRole.TechnicalWriter], parent: 'projects' },
     { name: 'Pending QR Reports', href: '/pending-qr-reports', icon: FileSearch, roles: [UserRole.QualityReviewer], parent: 'projects' },
+    {name: 'Reports to Approve', href: '/reports-to-approve', icon: FileSearch, roles: [UserRole.ReportApprover], parent: 'projects' },
     { name: 'Archived', href: '/archived-projects', icon: CheckSquare, roles: ['all'], parent: 'projects' },
     { name: 'Suspended', href: '/suspended-projects', icon: AlertCircle, roles: ['all'], parent: 'projects' },
 
@@ -49,19 +50,6 @@ export function Sidebar() {
     // { name: 'Manage Invitations', href: '/invitations', icon: Mail, roles: [UserRole.ProjectCoordinator] },
     { name: 'Activity Log', href: '/logs', icon: Settings, roles: ['all'] },
     { name: 'Status Group', href: '/status-group', icon: Group, roles: ['all'] },
-
-    // { name: 'IDP Completed', href: '/idp-completed', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'IDP Approved', href: '/idp-approve', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'IDP Rejected', href: '/idp-rejected', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Submitted', href: '/draft-report-submitted', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Rejected - By QR', href: '/draft-report-rejected-by-qr', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Approved - By QR', href: '/draft-approved-rejected-by-qr', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Approved - By EM', href: '/draft-approved-rejected-by-em', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Rejected - By ER', href: '/draft-report-rejected-by-em', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Rejected - By FE', href: '/draft-report-rejected-by-fe', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Draft Report Approved - By FE', href: '/draft-approved-rejected-by-fe', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Client Comments Received', href: '/comment-received', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
-    // { name: 'Generate Final Report ', href: '/generate-final-report', icon: AlertCircle, roles: ['all'], parent: 'Status Group' },
     
   ];
 

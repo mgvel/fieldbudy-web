@@ -150,12 +150,10 @@ const Header = ({ auth }: { auth: Auth }) => {
         </div>
       )}
     </div>
-        {/* Theme Toggle */}
         <IconButton onClick={() => document.documentElement.classList.toggle("dark")}>
           <Sun className="text-secondary" />
         </IconButton>
 
-        {/* Notifications */}
         <IconButton onClick={(e) => setNotifAnchorEl(e.currentTarget)}>
           <Badge badgeContent={notifications.length} color="error">
             <MessageSquareMore className="text-secondary" />
@@ -198,7 +196,6 @@ const Header = ({ auth }: { auth: Auth }) => {
           )}
         </Menu>
 
-        {/* Profile Menu */}
         <IconButton onClick={(e) => setProfileAnchorEl(e.currentTarget)}>
           {auth?.picture ? (
             <Avatar alt={auth.fullName} src={auth.picture} />

@@ -19,6 +19,9 @@ export enum ProjectStatus {
     DraftReportApprovedByQR = 'Draft Report Approved - By QR',
     DraftReportRejectedByEM = 'Draft Report Rejected - By EM',
     DraftReportApprovedByEM = 'Draft Report Approved - By EM',
+
+    ReportApprovedByRA = 'RA Approved Review',
+    ReportRejectedByRA = 'RA Rejected Review',
   
     ReceivedUsefulComments = 'Useful Comments by FE/TW',
     CommentsReviewed = 'Client Comments Received',

@@ -23,6 +23,7 @@ const STATUS_TABS = [
   "Draft Report Approved - By EM",
   "Draft Report Rejected - By FE",
   "Draft Report Approved - By FE",
+  "Report Approved - By RA",
   "Client Comments Received",
   "Generate Final Report",
 ];
