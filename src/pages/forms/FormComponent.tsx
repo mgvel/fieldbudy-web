@@ -21,7 +21,6 @@ const FormComponent: React.FC = () => {
   const navigate = useNavigate();
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Core state
   const [project, setProject] = useState<Project>();
   const [formData, setFormData] = useState<FormData>();
   const [pages] = useState(formdata);
@@ -171,46 +170,33 @@ const FormComponent: React.FC = () => {
 
 
 
-  const saveCurrentVersionForm = useCallback(async () => {
-    if (!project?.form?.slug) {
-      toast.error("Project form slug is missing");
-      return;
-    }
-
-    setIsSaving(true);
-    try {
-      const payload = {
-        responses,
-        ...counts
-      };
-
-      const response = await axiosInstance.patch(
-        `${API_BASE_URL}/form/save/${project.form.slug}`,
-         payload,
-      );
-
-      const now = new Date();
-      const formattedDate = now.toLocaleString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true,
-      });
-
-      setLastSaved(formattedDate);
-      setHasUnsavedChanges(false);
-      // toast.success("Changes saved successfully");
-      // await fetchProject();
-    } catch (error) {
-      console.error("Error saving form:", error);
-      toast.error("Failed to save form data");
-    } finally {
-      setIsSaving(false);
-    }
-  }, [project?.form?.slug, responses, counts, versionName, fetchProject]);
+  const saveCurrentVersionForm = useCallback(
+    async (latestResponses: Record<string, any>, latestCounts: FormCounts) => {
+      if (!project?.form?.slug) return;
+  
+      setIsSaving(true);
+      try {
+        const payload = {
+          responses: latestResponses,
+          ...latestCounts,
+        };
+  
+        await axiosInstance.patch(
+          `${API_BASE_URL}/form/save/${project.form.slug}`,
+          payload
+        );
+  
+        setLastSaved(new Date().toLocaleString());
+        setHasUnsavedChanges(false);
+      } catch (error) {
+        toast.error("Failed to save form data");
+      } finally {
+        setIsSaving(false);
+      }
+    },
+    [project?.form?.slug]
+  );
+  
 
   const savingFormData = useCallback(async () => {
     if (!project?.form?.slug) {
@@ -257,42 +243,44 @@ const FormComponent: React.FC = () => {
     }
   }, [project?.form?.slug, responses, counts, versionName, fetchProject]);
 
-  // Auto-save logic
-  const handleInputChange = useCallback((fieldId: string, value: any) => {
-    setResponses((prev) => ({ ...prev, [fieldId]: value }));
-    setHasUnsavedChanges(true);
-    
-    // Clear any pending auto-save
-    if (autoSaveTimerRef.current) {
-      clearTimeout(autoSaveTimerRef.current);
-    }
-    
-    // Set new auto-save timer (2 seconds after last change)
-    autoSaveTimerRef.current = setTimeout(() => {
-      if (versionName === "IDP Not Started" || versionName === "IDP In Progress - By FE") {
-        saveCurrentVersionForm();
-      } else {
-        saveCurrentVersionForm();
-      }
-    }, 2000);
-  }, [saveCurrentVersionForm, saveCurrentVersionForm, versionName]);
+  const handleInputChange = useCallback(
+    (fieldId: string, value: any) => {
+      setResponses((prev) => {
+        const updatedResponses = { ...prev, [fieldId]: value };
+  
+        setHasUnsavedChanges(true);
+  
+        if (autoSaveTimerRef.current) {
+          clearTimeout(autoSaveTimerRef.current);
+        }
+  
+        autoSaveTimerRef.current = setTimeout(() => {
+          saveCurrentVersionForm(updatedResponses, counts); 
+        }, 2000);
+  
+        return updatedResponses;
+      });
+    },
+    [saveCurrentVersionForm, counts]
+  );
+  
 
-  const handleUpdateCounts = useCallback((newCounts: FormCounts) => {
-    setCounts(newCounts);
-    setHasUnsavedChanges(true);
-    
-    // Trigger auto-save
-    if (autoSaveTimerRef.current) {
-      clearTimeout(autoSaveTimerRef.current);
-    }
-    autoSaveTimerRef.current = setTimeout(() => {
-      if (versionName === "IDP Not Started" || versionName === "IDP In Progress - By FE") {
-        saveCurrentVersionForm();
-      } else {
-        saveCurrentVersionForm();
+  const handleUpdateCounts = useCallback(
+    (newCounts: FormCounts) => {
+      setCounts(newCounts);
+      setHasUnsavedChanges(true);
+  
+      if (autoSaveTimerRef.current) {
+        clearTimeout(autoSaveTimerRef.current);
       }
-    }, 2000);
-  }, [saveCurrentVersionForm, saveCurrentVersionForm, versionName]);
+  
+      autoSaveTimerRef.current = setTimeout(() => {
+        saveCurrentVersionForm(responses, newCounts); 
+      }, 2000);
+    },
+    [saveCurrentVersionForm, responses]
+  );
+  
 
   const handleUpdateStatus = useCallback((newStatus: string) => {
     saveForm(false, newStatus);
@@ -480,7 +468,6 @@ useEffect(() => {
         />
       </Box>
 
-      {/* Modals */}
       <CommentModal
         open={chatOpen}
         fieldId={chatFieldId}
