@@ -30,6 +30,7 @@ import SuspendedProject from "./pages/project/SuspendedProject";
 import UsersList from "./pages/UsersList";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import PendingReportApprover from "./pages/widgets/PendingReportApprover";
+import ReportImages from "./pages/inspection-photograph/ReportImages";
 
 
 export const routes = [
@@ -71,6 +72,11 @@ export const routes = [
       {
         path: "inspection-photographs/:projectId",
         element: <InspectionPhotograph />,
+      },
+      {
+         path:"/report-image/:projectId?",
+          element:<ReportImages />,
+
       },
       { path: "field-buddy", element: <MyPendingFb /> },
       { path: "site-visits", element: <SiteVisite /> },

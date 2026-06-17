@@ -2,4 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add to your global CSS file */
+.react-beautiful-dnd-dragging {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+  z-index: 9999 !important;
+}
+
+.react-beautiful-dnd-drag-handle {
+  cursor: grab !important;
+}
+
+.react-beautiful-dnd-drag-handle:active {
+  cursor: grabbing !important;
+}
+
+/* Ensure drop zones are visible */
+.react-beautiful-dnd-droppable {
+  min-height: 100px;
+}
+
 
