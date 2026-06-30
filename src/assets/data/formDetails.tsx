@@ -334,6 +334,17 @@ const formDetails = [
       },
     ],
   },
+   {
+    id: "page-12",
+    parent: "Project Conclusion",
+    title: [
+      
+      {
+        id: "conclusion-notes",
+        name: "",
+      },
+    ],
+  },
 ];
 
 export default formDetails;

@@ -31,6 +31,7 @@ import UsersList from "./pages/UsersList";
 import { UpdatePassword } from "./pages/UpdatePassword";
 import PendingReportApprover from "./pages/widgets/PendingReportApprover";
 import ReportImages from "./pages/inspection-photograph/ReportImages";
+import ReportPreviewPage from "./pages/ReportPreviewPage";
 
 
 export const routes = [
@@ -69,6 +70,7 @@ export const routes = [
       { path: "form/:id", element: <FormComponent /> },
       { path: "projects", element: <Projects /> },
       { path: "projects/:id", element: <ProjectDetail /> },
+      { path:"project/preview-report/:slug",element:<ReportPreviewPage /> },
       {
         path: "inspection-photographs/:projectId",
         element: <InspectionPhotograph />,

@@ -1051,6 +1051,30 @@
             ]
           }
         ]
+      },
+      {
+        "color": "danger",
+        "id": "page-12",
+        "title": "Project Conclusion",
+        "order": 12,
+        "section": [
+          {
+            "id": "project-conclusion",
+            "title": "Project Conclusion",
+            "order": 1,
+            "isDeletable": false,
+            "isDuplicable": false,
+            "fields": [
+              {
+                "id": "conclusion-notes",
+                "title": "Write your project conclusion here ...",
+                "order": 2,
+                "isOptional": false,
+                "fieldType": "text"
+              }
+            ]
+          }
+        ]
       }
     ]
   

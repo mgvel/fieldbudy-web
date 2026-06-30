@@ -24,6 +24,7 @@ const FormComponent: React.FC = () => {
   const [project, setProject] = useState<Project>();
   const [formData, setFormData] = useState<FormData>();
   const [pages] = useState(formdata);
+  console.log("pafess",pages)
   const [responses, setResponses] = useState<Record<string, any>>({});
   const [counts, setCounts] = useState<FormCounts>({
     intervieweeCount: 1,
@@ -290,49 +291,10 @@ const FormComponent: React.FC = () => {
     setActiveTab(newTab);
   }, []);
 
-  const handleDownload = async () => {
-    if (!formData?.slug) return;
-    
-    try {
-      setLoadingReport(true);
-      const res = await axiosInstance.get(`/project/generate-report/${project?.slug}`, {
-        responseType: 'blob', // Important for binary files
-      });
-  
-      // Create a blob from the response
-      const blob = new Blob([res.data], { type: res.headers['content-type'] });
-      
-      // Create download link
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      
-      // Extract filename from headers or use a default
-      const contentDisposition = res.headers['content-disposition'];
-      let filename = 'report.docx';
-      if (contentDisposition) {
-        const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
-        if (filenameMatch && filenameMatch[1]) {
-          filename = filenameMatch[1];
-        }
-      }
-      
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
-      
-      // Clean up
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-      
-      setLoadingReport(false);
-      toast.success('Report downloaded successfully');
-    } catch (error) {
-      console.error('Error generating report:', error);
-      toast.error('Failed to generate report');
-      setLoadingReport(false);
-    }
-  };
+
+  const handleNavigate =()=>{
+      navigate(`/project/preview-report/${project?.slug}`)
+  }
 
   const handleOpenChat = useCallback((fieldId: string) => {
     setChatFieldId(fieldId);
@@ -365,31 +327,25 @@ const FormComponent: React.FC = () => {
   }, [navigate, hasUnsavedChanges]);
 
 
-// Add this effect in your FormComponent
 useEffect(() => {
-  // 1. Check for chat request after form loads
   if (!formData) return;
 
   const chatData = localStorage.getItem("openChat");
   if (!chatData) return;
 
   try {
-    // 2. Parse and validate data
     const { fieldId } = JSON.parse(chatData);
     if (fieldId) {
-      // 3. Open chat modal
       setChatFieldId(fieldId);
       setChatOpen(true);
     }
   } catch (error) {
     console.error("Error opening chat:", error);
   } finally {
-    // 4. Clean up
     localStorage.removeItem("openChat");
   }
-}, [formData]); // Runs when formData loads
+}, [formData]); 
 
-  // Cleanup effect
   useEffect(() => {
     return () => {
       if (autoSaveTimerRef.current) {
@@ -440,7 +396,7 @@ useEffect(() => {
         userRole={User?.role}
         versionName={versionName}
         lastSaved={lastSaved}
-        onDownload={handleDownload}
+        onNavigate={handleNavigate}
         loadingReport={loadingReport}
         onUpdateStatus={handleUpdateStatus}
         onBack={handleBack}

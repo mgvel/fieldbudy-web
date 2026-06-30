@@ -31,7 +31,7 @@ interface FormHeaderProps {
   userRole: string;
   versionName: string;
   lastSaved?: string;
-  onDownload: () => void;
+  onNavigate: () => void;
   loadingReport:boolean,
   onUpdateStatus: (newStatus: P) => void;
   isSaving: string;
@@ -116,7 +116,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({
   project,
   userRole,
   versionName,
-  onDownload,
+  onNavigate,
   lastSaved,
   onUpdateStatus,
   isSaving,
@@ -334,7 +334,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({
             title="Download Report"
           >
            
-           {loadingReport?<CircularProgress size={25} color="inherit"/> : <DownloadCloudIcon onClick={onDownload} />}
+           {loadingReport?<CircularProgress size={25} color="inherit"/> : <DownloadCloudIcon onClick={onNavigate} />}
           </IconButton>
 
           <Button
