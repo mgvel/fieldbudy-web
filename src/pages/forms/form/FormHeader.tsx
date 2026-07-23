@@ -25,6 +25,7 @@ import { format } from "date-fns";
 import axiosInstance from "../../../api/axiosInstance";
 import SiteInspectionModal from "./SiteInspectionModal";
 import { useAuthStore } from "../../../store/authStore";
+import { UserRole, normalizeUserRole } from "../../../types/user";
 
 interface FormHeaderProps {
   project?: Project;
@@ -38,60 +39,124 @@ interface FormHeaderProps {
   setVersionModalOpen: () => void;
 }
 
+// const statusRoleMap: Record<string, Record<string, P[]>> = {
+//   [P.IDPInProgressByFE]: {
+//     [UserRole.FieldEngineer]: [P.IDPCompletedByFE],
+//   },
+//   [P.IDPCompletedByFE]: {
+//     [UserRole.EngineeringManager]: [P.IDPRejectedByEM, P.IDPApprovedByEM],
+//   },
+//   [P.IDPRejectedByEM]: {
+//     [UserRole.FieldEngineer]: [P.IDPInProgressByFE],
+//   },
+//   [P.IDPApprovedByEM]: {
+//     [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
+//   },
+//   [P.DraftReportInProgress]: {
+//     [UserRole.TechnicalWriter]: [P.DraftReportSubmitted],
+//   },
+//   [P.DraftReportSubmitted]: {
+//     [UserRole.QualityReviewer]: [P.DraftReportRejectedByQR, P.DraftReportApprovedByQR],
+//   },
+//   [P.DraftReportRejectedByQR]: {
+//     [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
+//   },
+//   [P.DraftReportApprovedByQR]: {
+//     [UserRole.EngineeringManager]: [
+//       P.DraftReportRejectedByEM,
+//       P.DraftReportApprovedByEM,
+//     ],
+//   },
+//   [P.DraftReportRejectedByEM]: {
+//     [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
+//     [UserRole.EngineeringManager]: [
+//       P.DraftReportRejectedByEM,
+//       P.DraftReportApprovedByEM,
+//     ],
+//   },
+//   [P.DraftReportApprovedByEM]: {
+//     [UserRole.FieldEngineer]: [P.DraftReportRejectedByFE, P.DraftReportApprovedByFE],
+//   },
+//   [P.DraftReportRejectedByFE]: {
+//     [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
+//   },
+//   [P.DraftReportApprovedByFE]: {
+//     [UserRole.ReportApprover]: [P.ReportApprovedByRA, P.ReportRejectedByRA],
+//   },
+
+//   // [P.DraftReportApprovedByFE]: {
+//   //   "Project Coordinator": [P.CommentsReviewed],
+//   // },
+//   // [P.CommentsReviewed]: {
+//   //   "Field Engineer": [P.GenerateFinalReport, P.ReportFinalized],
+//   // },
+//   // [P.ReportFinalized]: {
+//   //   "Field Engineer": [P.GenerateFinalReport],
+//   // },
+// };
+
 const statusRoleMap: Record<string, Record<string, P[]>> = {
   [P.IDPInProgressByFE]: {
-    "Field Engineer": [P.IDPCompletedByFE],
+    [UserRole.FieldEngineer]: [P.IDPCompletedByFE],
   },
   [P.IDPCompletedByFE]: {
-    "Engineering Manager": [P.IDPRejectedByEM, P.IDPApprovedByEM],
+    [UserRole.EngineeringManager]: [P.IDPRejectedByEM, P.IDPApprovedByEM],
+    // ReportApproverPeerReviewer can also approve/reject IDP as EM
+    [UserRole.ReportApproverPeerReviewer]: [P.IDPRejectedByEM, P.IDPApprovedByEM],
   },
   [P.IDPRejectedByEM]: {
-    "Field Engineer": [P.IDPInProgressByFE],
+    [UserRole.FieldEngineer]: [P.IDPInProgressByFE],
   },
   [P.IDPApprovedByEM]: {
-    "Technical Writer": [P.DraftReportInProgress],
+    [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
+    // ReportApproverPeerReviewer can also approve IDP as EM
+    [UserRole.ReportApproverPeerReviewer]: [P.DraftReportInProgress],
   },
   [P.DraftReportInProgress]: {
-    "Technical Writer": [P.DraftReportSubmitted],
+    [UserRole.TechnicalWriter]: [P.DraftReportSubmitted],
   },
   [P.DraftReportSubmitted]: {
-    "Quality Reviewer": [P.DraftReportRejectedByQR, P.DraftReportApprovedByQR],
+    [UserRole.QualityReviewer]: [P.DraftReportRejectedByQR, P.DraftReportApprovedByQR],
+    // ReportApproverPeerReviewer can review as EM
+    [UserRole.ReportApproverPeerReviewer]: [P.DraftReportRejectedByEM, P.DraftReportApprovedByEM],
   },
   [P.DraftReportRejectedByQR]: {
-    "Technical Writer": [P.DraftReportInProgress],
+    [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
   },
   [P.DraftReportApprovedByQR]: {
-    "Engineering Manager": [
+    [UserRole.EngineeringManager]: [
+      P.DraftReportRejectedByEM,
+      P.DraftReportApprovedByEM,
+    ],
+    // ReportApproverPeerReviewer can also act as EM here
+    [UserRole.ReportApproverPeerReviewer]: [
       P.DraftReportRejectedByEM,
       P.DraftReportApprovedByEM,
     ],
   },
   [P.DraftReportRejectedByEM]: {
-    "Technical Writer": [P.DraftReportInProgress],
-    "Engineering Manager": [
+    [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
+    [UserRole.EngineeringManager]: [
+      P.DraftReportRejectedByEM,
+      P.DraftReportApprovedByEM,
+    ],
+    // ReportApproverPeerReviewer can also re-review as EM
+    [UserRole.ReportApproverPeerReviewer]: [
       P.DraftReportRejectedByEM,
       P.DraftReportApprovedByEM,
     ],
   },
   [P.DraftReportApprovedByEM]: {
-    "Field Engineer": [P.DraftReportRejectedByFE, P.DraftReportApprovedByFE],
+    [UserRole.FieldEngineer]: [P.DraftReportRejectedByFE, P.DraftReportApprovedByFE],
   },
   [P.DraftReportRejectedByFE]: {
-    "Technical Writer": [P.DraftReportInProgress],
+    [UserRole.TechnicalWriter]: [P.DraftReportInProgress],
   },
   [P.DraftReportApprovedByFE]: {
-    "Report Approver": [P.ReportApprovedByRA, P.ReportRejectedByRA],
+    [UserRole.ReportApprover]: [P.ReportApprovedByRA, P.ReportRejectedByRA],
+    // ReportApproverPeerReviewer can also act as RA here
+    [UserRole.ReportApproverPeerReviewer]: [P.ReportApprovedByRA, P.ReportRejectedByRA],
   },
-
-  // [P.DraftReportApprovedByFE]: {
-  //   "Project Coordinator": [P.CommentsReviewed],
-  // },
-  // [P.CommentsReviewed]: {
-  //   "Field Engineer": [P.GenerateFinalReport, P.ReportFinalized],
-  // },
-  // [P.ReportFinalized]: {
-  //   "Field Engineer": [P.GenerateFinalReport],
-  // },
 };
 
 const statusLabelMap: Record<P, string> = {
@@ -158,7 +223,8 @@ const FormHeader: React.FC<FormHeaderProps> = ({
     }
   };
 
-  const availableStatuses = statusRoleMap[versionName]?.[userRole] || [];
+  const normalizedUserRole = normalizeUserRole(userRole);
+  const availableStatuses = statusRoleMap[versionName]?.[normalizedUserRole] || [];
 
   const isEditing =
     versionName?.includes("In Progress") ||

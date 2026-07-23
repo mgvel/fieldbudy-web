@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { UserRole } from '../../types/user';
+import { UserRole, normalizeUserRole } from '../../types/user';
 // (optional) import your store to read hydration status if you want
 
 interface RequireAuthProps {
@@ -30,7 +30,11 @@ export function RequireAuth({ children, allowedRoles }: RequireAuthProps) {
 
   // 3) Role gating
   if (allowedRoles && user) {
-    const hasAllowedRole = allowedRoles.includes(user.role as UserRole);
+    const normalizedUserRole = normalizeUserRole(user.role);
+    const hasAllowedRole = allowedRoles.some(
+      (role) => normalizeUserRole(role) === normalizedUserRole
+    );
+
     if (!hasAllowedRole) {
       return <Navigate to="/unauthorized" replace />;
     }

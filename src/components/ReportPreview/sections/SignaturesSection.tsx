@@ -22,7 +22,7 @@ export function SignaturesSection({ inspectorInfo }: { inspectorInfo: InspectorI
         </div>
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Reviewed By</p>
-          <SignatureLine name="Engineering Manager" title="" date="_________________" />
+          <SignatureLine name="Peer Reviewer" title="" date="_________________" />
         </div>
       </div>
     </section>

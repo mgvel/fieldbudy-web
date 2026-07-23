@@ -61,7 +61,7 @@
                 "fieldType": "text",
                 "hint": "Experts MUST craft a complete SOW Statement (to use 'as is' in the report) before the IDP is submitted.",
                 "order": 2,
-                "instructions": "Engineering Managers MUST review and comment on the SOW Statement.<br/><br/>Technical Writers MUST verify with Experts if the SOW statement does not cover all the requested items by the client."
+                "instructions": "Peer Reviewers MUST review and comment on the SOW Statement.<br/><br/>Staff Engineers MUST verify with Experts if the SOW statement does not cover all the requested items by the client."
               }
             ]
           }

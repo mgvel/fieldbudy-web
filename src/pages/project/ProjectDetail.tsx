@@ -166,21 +166,21 @@ export default function ProjectDetail() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              ["Field Engineer", project.fe?.fullName, "Assign Field Engineer"],
+              ["Project Manager", project.fe?.fullName, "Assign Project Manager"],
               [
-                "Quality Reviewer",
+                "Staff Engineer & Quality Reviewer",
                 project.qr?.fullName,
-                "Assign Quality Reviewer",
+                "Assign Staff Engineer & Quality Reviewer",
               ],
               [
-                "Engineering Manager",
+                "Peer Reviewer",
                 project.em?.fullName,
-                "Assign Engineering Manager",
+                "Assign Peer Reviewer",
               ],
               [
-                "Technical Writer",
+                "Staff Engineer",
                 project.tw?.fullName,
-                "Assign Technical Writer",
+                "Assign Staff Engineer",
               ],
             ].map(([role, name, fallback], i) => (
               <div key={i} className="space-y-1">

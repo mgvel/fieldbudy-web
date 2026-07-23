@@ -7,6 +7,7 @@ import creambg from "../assets/img/cream-rectangle.png";
 import purplebg from "../assets/img/purple-rectangle.png";
 import { Map } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
+import { UserRole, normalizeUserRole } from "../types/user";
 
 interface Widget {
   id: string;
@@ -121,10 +122,10 @@ export const Dashboard = () => {
   };
 
   const renderRoleSpecificCards = () => {
-    const role = User?.role;
+    const role = normalizeUserRole(User?.role);
 
     switch (role) {
-      case "Project Coordinator":
+      case UserRole.ProjectCoordinator:
         return (
           <>
             {widgets
@@ -152,7 +153,7 @@ export const Dashboard = () => {
           </>
         );
 
-      case "Field Engineer":
+      case UserRole.FieldEngineer:
         return (
           <>
             {widgets
@@ -196,7 +197,7 @@ export const Dashboard = () => {
             />
             {widgets
               .filter(
-                (widget) => widget.id === "my_pending_report_review_as_fe"
+                (widget) => widget.id === "my_pending_report_review_as_fe",
               )
               .map((widget) => (
                 <StatCard
@@ -210,7 +211,7 @@ export const Dashboard = () => {
           </>
         );
 
-      case "Engineering Manager":
+      case UserRole.EngineeringManager:
         return (
           <>
             {widgets
@@ -238,7 +239,7 @@ export const Dashboard = () => {
               ))}
             {widgets
               .filter(
-                (widget) => widget.id === "my_pending_report_review_as_em"
+                (widget) => widget.id === "my_pending_report_review_as_em",
               )
               .map((widget) => (
                 <StatCard
@@ -251,8 +252,156 @@ export const Dashboard = () => {
               ))}
           </>
         );
+      case UserRole.ReportApproverPeerReviewer:
+        return (
+          <>
+            {widgets
+              .filter((widget) => widget.id === "my_assigned_project")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="My Assigned project"
+                  color="blue"
+                  link="/projects"
+                />
+              ))}
 
-      case "Technical Writer":
+            {widgets
+              .filter(
+                (widget) => widget.id === "my_pending_report_review_as_ra",
+              )
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Reports to Approve (RA)"
+                  color="cream"
+                  link="/reports-to-approve"
+                />
+              ))}
+
+            {/* Engineering Manager Widgets */}
+            {widgets
+              .filter((widget) => widget.id === "my_idp_pending_approval")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="My Pending FB Review"
+                  color="purple"
+                  link="/fb-pending-review"
+                />
+              ))}
+
+            {widgets
+              .filter(
+                (widget) => widget.id === "my_pending_report_review_as_em",
+              )
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Reports to Review (EM)"
+                  color="black"
+                  link="/fb-pending-report-review"
+                />
+              ))}
+
+            {widgets
+              .filter((widget) => widget.id === "my_completed_projects")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="My Completed Projects"
+                  color="gray"
+                  link="/completed-projects"
+                />
+              ))}
+
+            {/* Optional: Additional EM widgets you might want to show */}
+            {/* {widgets
+              .filter(
+                (widget) => widget.id === "my_fes_reports_in_client_review",
+              )
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Reports in Client Review"
+                  color="orange"
+                  link="/reports-in-client-review"
+                />
+              ))}
+
+            {widgets
+              .filter((widget) => widget.id === "my_fes_pending_idp")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Pending IDP (FE)"
+                  color="red"
+                  link="/pending-idp"
+                />
+              ))}
+
+            {widgets
+              .filter(
+                (widget) =>
+                  widget.id === "my_fes_reports_in_authoring_pending_authoring",
+              )
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Reports in Authoring"
+                  color="teal"
+                  link="/reports-in-authoring"
+                />
+              ))}
+
+            {widgets
+              .filter(
+                (widget) => widget.id === "my_fes_reports_in_pending_qr_review",
+              )
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Reports in QR Review"
+                  color="indigo"
+                  link="/reports-in-qr-review"
+                />
+              ))}
+
+            {widgets
+              .filter((widget) => widget.id === "todays_svs")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Today's Site Visits"
+                  color="yellow"
+                  link="/todays-svs"
+                />
+              ))}
+
+            {widgets
+              .filter((widget) => widget.id === "tomorrows_svs")
+              .map((widget) => (
+                <StatCard
+                  key={widget.id}
+                  value={widget.value}
+                  label="Tomorrow's Site Visits"
+                  color="cyan"
+                  link="/tomorrows-svs"
+                />
+              ))} */}
+          </>
+        );
+      case UserRole.TechnicalWriter:
         return (
           <>
             {widgets
@@ -292,7 +441,7 @@ export const Dashboard = () => {
               .filter(
                 (widget) =>
                   widget.id ===
-                  "my_pending_rejected_review_comments_implementation"
+                  "my_pending_rejected_review_comments_implementation",
               )
               .map((widget) => (
                 <StatCard
@@ -306,7 +455,7 @@ export const Dashboard = () => {
           </>
         );
 
-      case "Quality Reviewer":
+      case UserRole.QualityReviewer:
         return (
           <>
             {widgets
@@ -334,7 +483,7 @@ export const Dashboard = () => {
 
             {widgets
               .filter(
-                (widget) => widget.id === "my_pending_report_review_as_qr"
+                (widget) => widget.id === "my_pending_report_review_as_qr",
               )
               .map((widget) => (
                 <StatCard
@@ -348,7 +497,7 @@ export const Dashboard = () => {
           </>
         );
 
-      case "Technical Writer & Quality Reviewer":
+      case UserRole.TechnicalWriterQualityReviewer:
         return (
           <>
             {/* TW Widgets */}
@@ -380,7 +529,7 @@ export const Dashboard = () => {
               .filter(
                 (widget) =>
                   widget.id ===
-                  "my_pending_rejected_review_comments_implementation"
+                  "my_pending_rejected_review_comments_implementation",
               )
               .map((widget) => (
                 <StatCard
@@ -407,7 +556,7 @@ export const Dashboard = () => {
 
             {widgets
               .filter(
-                (widget) => widget.id === "my_pending_report_review_as_qr"
+                (widget) => widget.id === "my_pending_report_review_as_qr",
               )
               .map((widget) => (
                 <StatCard
@@ -421,7 +570,7 @@ export const Dashboard = () => {
           </>
         );
 
-       case "Report Approver":
+      case UserRole.ReportApprover:
         return (
           <>
             {widgets
@@ -437,7 +586,9 @@ export const Dashboard = () => {
               ))}
 
             {widgets
-              .filter((widget) => widget.id === "my_pending_report_review_as_ra")
+              .filter(
+                (widget) => widget.id === "my_pending_report_review_as_ra",
+              )
               .map((widget) => (
                 <StatCard
                   key={widget.id}
@@ -448,7 +599,7 @@ export const Dashboard = () => {
                 />
               ))}
           </>
-        ); 
+        );
 
       default:
         return (
@@ -502,11 +653,11 @@ export const Dashboard = () => {
             Here, you can efficiently create and manage all your Inspection Data
             Packages (IDP) and Engineering Reports. This tool will assist you to
             stay organized, track progress and collaborate effortlessly with
-            your Engineering Manager (EM), Technical Writer (TW), and/or Report
-            Quality Reviewer (QR). As always, any feedback on this tool and/or
-            our processes is welcome. We aim to make things highly efficient for
-            our entire team and deliver an outstanding product to our clients
-            with an industry leading turnaround time (TAT).
+            your Peer Reviewer (PR), Staff Engineer (SE), and/or Staff Engineer
+            & Quality Reviewer (SEQ). As always, any feedback on this tool
+            and/or our processes is welcome. We aim to make things highly
+            efficient for our entire team and deliver an outstanding product to
+            our clients with an industry leading turnaround time (TAT).
           </p>
           <a href="/projects">
             <Button className="hover:bg-secondary bg-secondary text-white text-sm md:text-base">

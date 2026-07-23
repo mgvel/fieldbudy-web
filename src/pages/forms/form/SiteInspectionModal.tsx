@@ -104,7 +104,7 @@ const SiteInspectionModal: React.FC<SiteInspectionModalProps> = ({
             Date Of Visit: {siteInspection.Site_Inspection_Date}
           </Typography>
           <Typography variant="body1" className="text-blue-900 font-medium">
-            Field Engineer:{" "}
+            Project Manager:{" "}
             {siteInspection?.Field_EngineerReferences !=="" &&
            siteInspection?.Field_EngineerReferences?.map(
               (el: any) => el.display_value

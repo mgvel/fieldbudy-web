@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../api/authService';
-import { User, UserRole } from '../types/user';
+import { User, UserRole, normalizeUserRole } from '../types/user';
 import { toast } from 'react-toastify'; 
 
 export function useAuth() {
@@ -63,12 +63,15 @@ export function useAuth() {
 
   const hasRole = (roles: UserRole | UserRole[]) => {
     if (!user) return false;
-    
+
+    const normalizedUserRole = normalizeUserRole(user.role);
+
     if (Array.isArray(roles)) {
-      return roles.includes(user.role as UserRole);
+      const normalizedRoles = roles.map((role) => normalizeUserRole(role));
+      return normalizedRoles.includes(normalizedUserRole as UserRole);
     }
-    
-    return user.role === roles;
+
+    return normalizeUserRole(roles) === normalizedUserRole;
   };
 
   return {
